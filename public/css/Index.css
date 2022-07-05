@@ -1,0 +1,40 @@
+/* css page for index.html */
+
+/* style for body */
+body {
+    background-color: silver;
+}
+
+/* style for page title */
+#page_title {
+    text-align: center;
+    font-family: monospace;
+}
+
+/* style for subtitle */
+#subtitle {
+    text-align: center;
+    font-family: monospace;
+}
+
+/* style for caption */
+#caption {
+    text-align: center;
+    font-family: monospace;
+}
+
+#gif_container {
+    width: 50%;
+    height: 50%;
+}
+
+/* style for audio player */
+#audio_player {
+    margin: auto;
+    display: table;
+
+}
+/* style for info */
+#info {
+    font-family: monospace;
+}

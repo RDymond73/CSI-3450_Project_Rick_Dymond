@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- this is the head of the document containing metadata-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rick's Music Database</title>
+    <link rel="stylesheet" href="css/Index.css">
+    <script src="/public/js/Index.js"></script>
+</head>
+
+<!-- this is the body of the document containing the page contents -->
+<body>
+	<!-- this is the title header -->
+    <header> 
+		<h1 id="page_title">Rick's Music Player & Database </h1>
+		<h4 id="subtitle"> Music Data Repository </h4>
+	</header>
+	
+	<!-- this is the nav bar of the document containing hyperlinks-->
+	<nav>
+		<!-- link to index.html -->
+		<p id="home_link"><a href="/public/index.html">Home Page</p></a>
+	</nav>
+	
+	<br>
+	<hr>
+	
+	<!-- this is the article container that hold the diffrent sections of the webpage -->
+	<article>
+		<!-- this is the gif section of the article -->
+		<section id="gif_container">
+			<img src="/public/images/music_gif.gif" id="music_gif" alt="" srcset="">
+		</section>
+
+		<!-- this is the music player section of the article -->
+		<section id="player_container"> 
+			<p id="caption"> Play your favorite music!  </p>
+			<!--This is an audio player for the mp3 files-->
+			<audio controls id="audio_player">
+				<source src="./audio/Tame Impala - Let It Happen.mp3" type="audio/mp3">
+				<!-- <source src="" type=""> -->
+			</audio>
+		</section>
+	</article>
+
+	<br>
+	<hr>
+	<br>
+
+	<!-- this is the footer of the document containing contact information -->
+	<footer>
+		<p id="info"> 
+			Email: rdymond@oakland.edu 
+			<br>
+			<br>
+			Class: CSI-3450 Database Design & Implementation
+			<br>
+			<br>
+			Professor: mollah@oakland.edu
+		</p>
+	</footer>
+</body>
+
+</html>
