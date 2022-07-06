@@ -17,23 +17,58 @@ body {
     font-family: monospace;
 }
 
+/* style for music gif */
+#music_gif {
+    width: 25%;
+    height: 25%;
+    display: table;
+    margin: auto;
+}
+
 /* style for caption */
 #caption {
     text-align: center;
     font-family: monospace;
 }
 
-#gif_container {
-    width: 50%;
-    height: 50%;
+#file {
+    margin: auto;
+    display: table;
+    font-family: monospace;
+    text-align: center;
+}
+
+#music_info {
+    margin: auto;
+    display: table;
+    font-family: monospace;
+    text-align: center;
+}
+
+/* player container styling 
+#player_container {
+    margin: auto;
+    font-family: monospace;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* styling for buttons */
+#upload, #search, #update, #delete {
+    margin: auto;
+    font-family: monospace;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
 }
 
 /* style for audio player */
 #audio_player {
     margin: auto;
     display: table;
+} 
 
-}
 /* style for info */
 #info {
     font-family: monospace;
