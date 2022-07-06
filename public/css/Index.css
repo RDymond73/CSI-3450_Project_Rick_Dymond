@@ -5,6 +5,11 @@ body {
     background-color: silver;
 }
 
+/* styling for nav bar */
+nav {
+    font-family: monospace;
+}
+
 /* style for page title */
 #page_title {
     text-align: center;
@@ -31,6 +36,12 @@ body {
     font-family: monospace;
 }
 
+/* style for audio player */
+#audio_player {
+    margin: auto;
+    display: table;
+} 
+
 #file {
     margin: auto;
     display: table;
@@ -38,9 +49,9 @@ body {
     text-align: center;
 }
 
-#music_info {
-    margin: auto;
-    display: table;
+#song, #artist_name, #album, #uploader_name {
+    margin:auto;
+    display:table;
     font-family: monospace;
     text-align: center;
 }
@@ -63,11 +74,14 @@ body {
     display: flex;
 }
 
-/* style for audio player */
-#audio_player {
+/* styling for successful functions */
+#uploadGood, #searchGood, #updateGood, #delGood{
     margin: auto;
     display: table;
-} 
+    font-family: monospace;
+    text-align: center;
+}
+
 
 /* style for info */
 #info {

@@ -9,7 +9,6 @@
     <title>Rick's Music Database</title>
 	<link rel="shortcut icon" href="/public/images/music_gif.gif" type="image/x-icon">
     <link rel="stylesheet" href="css/Index.css">
-    <script src="/public/js/Index.js"></script>
 </head>
 
 <!-- this is the body of the document containing the page contents -->
@@ -23,7 +22,7 @@
 	<!-- this is the nav bar of the document containing hyperlinks-->
 	<nav>
 		<!-- link to index.html -->
-		<p id="home_link"><a href="/public/index.html">Home Page</p></a>
+		<p id="home_link"><a href="./index.html">Home Page</p></a>
 	</nav>
 	
 	<br>
@@ -33,7 +32,7 @@
 	<article>
 		<!-- this is the gif section of the article -->
 		<section id="gif_container">
-			<img src="/public/images/music_gif.gif" id="music_gif" alt="" srcset="">
+			<img src="./images/music_gif.gif" id="music_gif" alt="" srcset="">
 		</section>
 
 		<!-- this is the music player section of the article -->
@@ -50,12 +49,13 @@
 
 			<!-- This is a file uploader for MP3s -->
 			<input type="file" id="file" accept="audio/*" required/>
-
 			<br>
 
 			<!-- field for adding database info  -->
-			<input type="text" name="music_info" id="music_info" width="100px" required placeholder="Song title">
-
+			<input type="text" name="song" id="song" width="100px" required placeholder="Song title">
+			<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
+			<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
+			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
 			<br>
 
 			<!-- create, read, update, delete buttons -->
@@ -87,6 +87,10 @@
 			Professor: mollah@oakland.edu
 		</p>
 	</footer>
+
+	<!-- js for page -->
+	<script src="/public/js/home.js"></script>
+
 </body>
 
 </html>
