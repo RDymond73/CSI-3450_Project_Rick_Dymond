@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rick's Music Database</title>
-	<link rel="shortcut icon" href="/public/images/music_gif.gif" type="image/x-icon">
+	<link rel="shortcut icon" href="./images/music_gif.gif" type="image/x-icon">
     <link rel="stylesheet" href="css/Index.css">
 </head>
 
@@ -22,7 +22,7 @@
 	<!-- this is the nav bar of the document containing hyperlinks-->
 	<nav>
 		<!-- link to index.html -->
-		<p id="home_link"><a href="./index.html">Home Page</p></a>
+		<p id="home_link"><a href="/home">Home Page</p></a>
 	</nav>
 	
 	<br>
@@ -41,14 +41,15 @@
 
 			<!--This is an audio player for the mp3 files-->
 			<audio controls id="audio_player">
-				<source src="./audio/Tame Impala - Let It Happen.mp3" type="audio/mp3">
-				<!-- <source src="" type=""> -->
+				 <source src="" type="" id="mp3_src">
 			</audio>
 
 			<br>
 
 			<!-- This is a file uploader for MP3s -->
-			<input type="file" id="file" accept="audio/*" required/>
+			<form action="/public/audio/" method="post" enctype="multipart/form-data">
+				<input type="file" id="file" accept="audio/*" required name="mp3_file"/>
+			</form>
 			<br>
 
 			<!-- field for adding database info  -->
@@ -59,15 +60,30 @@
 			<br>
 
 			<!-- create, read, update, delete buttons -->
-			<input type="button" value="Upload" id="upload">
+			<input type="button" value="Upload" id="upload" onClick="location.href='/insert_table'">
 			<br>
-			<input type="button" value="Search" id="search">
+			<input type="button" value="Search" id="search" onClick="location.href='/search_table'">
 			<br>
-			<input type="button" value="Update" id="update">
+			<input type="button" value="Update" id="update" onClick="location.href= '/update_table'">
 			<br>
-			<input type="button" value="Delete" id="delete">
+			<input type="button" value="Delete" id="delete" onClick="location.href='/drop_row'">
 			<br>
 
+		</section>
+
+		<!-- section for database table display -->
+		<section id="table_container">
+			<table>
+				<thead>
+					<th>ID</th>
+					<th>Song Name</th>
+					<th>Album Name</th>
+					<th>Uploader Name</th>
+					<tbody>
+						
+					</tbody>
+				</thead>
+			</table>
 		</section>
 	</article>
 
@@ -89,7 +105,7 @@
 	</footer>
 
 	<!-- js for page -->
-	<script src="/public/js/home.js"></script>
+	<script src="./js/home.js"></script>
 
 </body>
 

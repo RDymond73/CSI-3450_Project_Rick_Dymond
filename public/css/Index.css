@@ -82,6 +82,18 @@ nav {
     text-align: center;
 }
 
+/* table container styling */
+ table, th, td {
+    margin: auto;
+    font-family: monospace;
+    align-items: center;
+    justify-content: center;
+    border-collapse: collapse;
+    border: 1px solid black;
+    background-color: whitesmoke;
+    padding: auto;
+} 
+
 
 /* style for info */
 #info {
