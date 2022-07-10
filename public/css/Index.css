@@ -31,7 +31,7 @@ nav {
 }
 
 /* style for caption */
-#caption {
+#caption, #music_table_title {
     text-align: center;
     font-family: monospace;
 }
@@ -42,7 +42,7 @@ nav {
     display: table;
 } 
 
-#file {
+#file_input {
     margin: auto;
     display: table;
     font-family: monospace;
@@ -83,7 +83,7 @@ nav {
 }
 
 /* table container styling */
- table, th, td {
+  table, th, td, tbody{
     margin: auto;
     font-family: monospace;
     align-items: center;
@@ -92,6 +92,7 @@ nav {
     border: 1px solid black;
     background-color: whitesmoke;
     padding: auto;
+    text-align: center;
 } 
 
 

@@ -13,7 +13,9 @@ const { strictEqual } = require("assert");
 const { clearScreenDown } = require("readline");
 const { brotliDecompress } = require("zlib");
 const { writer } = require("repl");
+const { resolve } = require("path");
 const app = express();
+let instance = null;
 env.config();
 
 //database connection object
@@ -34,6 +36,30 @@ database.connect(function(err) {
   console.log('Connected to Database');
 });
 
+//class DBService {
+  //static getDbServiceInstance() {
+  //  return instance ? instance : new Dbservice();
+  //}
+
+ // async getALLData() {
+   // try {
+   //   const response = await new Promise((resolve, reject) => {
+    //    const query = "SELECT * FROM music_table WHERE song = ?;";
+
+     //   database.query(query, (error, results) => {
+   //       if (error) reject(new Error(error.message));
+    //      resolve(results);
+   //     })
+   //   });
+   //   console.log(reponse);
+  //  } catch (error) {
+  //    console.log(error);
+  //  }
+ // }
+//}
+
+//module.exports = DBService;
+
 //middleware & routers
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -50,11 +76,17 @@ app.use(cors());
 
 app.use(fileUpload());
 
+//app.use(upload());
+
 
 //test server via http
-app.get("/home", (req, res) => {
-   res.render(__dirname + '/views/index.ejs', {test: 'HELLO!'})
-   console.log('HTTP reponse successful');
+// app.get("/home", (req, res) => {
+//    res.render(__dirname + '/views/index.ejs', {test: 'HELLO!'})
+//    console.log('HTTP reponse successful');
+//   });
+
+app.get('/', (req, res) => {
+  res.redirect('/home');
   });
 
   //upload mp3 file
@@ -63,20 +95,22 @@ app.get("/home", (req, res) => {
   console.log('Upload Reponse Successful');
   });
 
-app.post('/home', function(req, res){
-  let mp3_data = req.body;
-  let mp3_file = req.files.mp3_file;
+// app.all('/insert_table', function(req, res){
+//   let mp3_data = req.body;
+//   let mp3_file = req.files.mp3_file;
 
-  mp3_file.mv('/public/audio/'+ mp3_file.name, function (error) {
-    if(error) {
-    console.log('MP3 Upload not succesful');
-    console.log(error);
-  }else{
-    console.log('MP3 Upload Succesful');
-  }
-  console.log(mp3_file);
-  });
-});
+//   mp3_file.mv('./audio/' + mp3_file.name, function (error) {
+//     if(error) {
+//     console.log('MP3 Upload not succesful');
+//     console.log(error);
+//   }else{
+//     console.log('MP3 Upload Succesful');
+//   }
+//   console.log(mp3_file);
+//   });
+
+//   res.redirect('/home');
+// });
 
 //create db for admin
 app.get('/create_db', (req, res) => {
@@ -105,7 +139,7 @@ app.get('/drop_db', (req, res) => {
 
 //create table for admin
 app.get('/create_table', (req, res) => {
-    let sql = 'CREATE TABLE music_table(id INT AUTO_INCREMENT PRIMARY KEY, song VARCHAR(255), artist VARCHAR(255), uploader VARCHAR(255), mp3 BLOB)';
+    let sql = 'CREATE TABLE music_table(id INT AUTO_INCREMENT PRIMARY KEY, song VARCHAR(255), album VARCHAR(255), artist VARCHAR(255), uploader VARCHAR(255), mp3 BLOB)';
     let databaseName = 'music_db';
     database.query(sql, (err, result) => {
       if (err) throw err;
@@ -128,9 +162,20 @@ app.get('/create_table', (req, res) => {
   });
 
   //database querys
-  //create
-  app.get('/insert_table', (request, response) => {
-    let sql = "INSERT INTO music_table (id, song, artist, uploader, mp3) VALUES (NULL, 'Ripple', 'Grateful Dead', 'Rick Dymond', 'file')";
+  //insert row into music_table
+  app.all('/insert_table', (request, response) => {
+    
+    let song =  request.query.song;
+    let album = request.query.album;
+    let artist = request.query.artist;
+    let uploader = request.query.uploader;
+    let mp3_file = request.query.mp3_file;
+    console.log(song);
+    console.log(album);
+    console.log(artist);
+    console.log(uploader);
+    //let mp3_file = request.files.mp3_file;
+    let sql = "INSERT INTO `music_table`(`id`, `song`, `album`, `artist`, `uploader`, `mp3`) VALUES (NULL" + ", '" + song + "', '"+ album +"', '" + artist + "', '" + uploader + "', " + 'MP3' + ');';
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -139,58 +184,36 @@ app.get('/create_table', (req, res) => {
     console.log('Insert Query');
   });
 
-  //test create
-  app.post('/test_create', (request, response) => {
-
-  });
-
   //search
-  app.get('/search_table', (request, response) => {
+  app.all('/search_table', (request, response) => {
     let sql = 'SELECT * FROM music_table';
+    //const db = DBService.getDbServiceInstance();
+    //const result = DBService.getALLData();
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
     });
     response.redirect('/home');
     console.log('Search Querry');
+
   });
 
-  //search 2
-  app.get('/search', (req, res) => {
+  //Load table into EJS
+  app.all('/home', (req, res) => {
   console.log(req.query);
   console.log(res.query);
-  let sql = 'SELECT * FROM music_table';
-  database.query(sql, (err, result) => {
+  let sql = 'SELECT * FROM music_table ORDER BY id';
+  database.query(sql, (err, data) => {
     if (err) throw err;
-    console.log(result);
-  });
-  res.json({
-    message: 'search JSON reponse successful',
-    id: req.query.id,
-    song: req.query.song,
-    artist: req.query.artist,
-    uploader: req.query.uploader,
-    mp3_file: req.query.mp3_file,
-  });
-  //http://localhost:3000/search?id=1&song=Ripple&artist=Grateful%20Dead&uploader=Rick%20Dymond&mp3_file=BLOB
-  //res.redirect('/');
-
-  //drop row
-  app.get('/drop_row', (req, res) => {
-    let sql = 'DELETE FROM music_table WHERE id=1';
-    let databaseName = 'music_db';
-    database.query(sql, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-    res.redirect('/home');
-    console.log('Row Deleted');
+    console.log(data);
+    res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index:data});
   });
 
   });
-
-  app.get('/drop_row', (req, res) => {
-    let sql = 'DELETE FROM music_table WHERE id=1';
+//drop row
+  app.all('/drop_row', (req, res) => {
+    let rowID = req.query.id;
+    let sql = 'DELETE FROM music_table WHERE id=' + rowID;
     let databaseName = 'music_db';
     database.query(sql, (err, result) => {
       if (err) throw err;

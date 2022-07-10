@@ -35,8 +35,7 @@
 			<img src="./images/music_gif.gif" id="music_gif" alt="" srcset="">
 
 		</section>
-        <% let test = 'EJS Test' %>
-        <%= test %>
+
 		<!-- this is the music player section of the article -->
 		<section id="player_container"> 
 			<p id="caption"> Upload an audio file and play your favorite music!  </p>
@@ -49,20 +48,24 @@
 			<br>
 
 			<!-- This is a file uploader for MP3s -->
-			<form action="/public/audio/" method="post" enctype="multipart/form-data">
-				<input type="file" id="file" accept="audio/*" required name="mp3_file"/>
+			<form action="/" method="POST" enctype="multipart/form-data">
+				<input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>
 			</form>
 			<br>
 
 			<!-- field for adding database info  -->
+            <form action="javascript:void(0);" method="POST"
+            onsubmit = "app.Add()">
 			<input type="text" name="song" id="song" width="100px" required placeholder="Song title">
 			<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
 			<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
 			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
 			<br>
+            </form>
 
 			<!-- create, read, update, delete buttons -->
-			<input type="button" value="Upload" id="upload" onClick="location.href='/insert_table'">
+            <form method="POST" onsubmit="">
+			<input type="button" value="Upload" id="upload" onClick="location.href='/home'">
 			<br>
 			<input type="button" value="Search" id="search" onClick="location.href='/search_table'">
 			<br>
@@ -70,22 +73,62 @@
 			<br>
 			<input type="button" value="Delete" id="delete" onClick="location.href='/drop_row'">
 			<br>
+            </form>
 
 		</section>
 
 		<!-- section for database table display -->
 		<section id="table_container">
-			<table>
+            <p id="music_table_title"><%= title %></p>
+            <% if (action == 'add') { %>
+                <% } else { %>
+			<table id="music_table">
 				<thead>
 					<th>ID</th>
 					<th>Song Name</th>
 					<th>Album Name</th>
+                    <th>Artist name</th>
 					<th>Uploader Name</th>
-					<tbody>
-						
-					</tbody>
-				</thead>
+                    <th>MP3 file</th>
+                    <th>Select</th>
+                    <th>Delete</th>
+                    <th>Update</th>
+                </thead>
+				<tbody>
+						<!-- <tr><td colspan="">Test</td></tr>
+                        <tr><td colspan=""></d>test</td></tr> -->
+                        <% if(index.length > 0)
+                        {
+                            index.forEach(function(data) {
+                            %>
+                                <tr>
+                                    <td><%= data.id %></td>
+                                    <td><%= data.song %></td>
+                                    <td><%= data.album %></td>
+                                    <td><%= data.artist %></td>
+                                    <td><%= data.uploader %></td>
+                                    <td><%= data.mp3 %></td>
+                                    <td>
+                                        <a href="/drop_row?<%= %>"  class="update"></a>
+                                    </td>
+                                    <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>'">Delete</button></td>
+                                    <td><button class="update">Update</button></td>
+                                </tr>
+                        <%
+                            });
+                        } 
+                        else 
+                        { 
+                        %> 
+                     <tr>
+                        <td colspan="9">No Data Found</td>
+                     </tr>
+                     <%
+                    }
+                    %>
+				</tbody>
 			</table>
+            <% } %>
 		</section>
 	</article>
 
