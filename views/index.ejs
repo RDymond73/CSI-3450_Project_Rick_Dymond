@@ -43,22 +43,21 @@
             <form action="/insert_table" method="POST" enctype="multipart/form-data">
 
               <% if (player!="") { %>
-                <% data.id %>
-                    <% let source_file = index.data.id.replaceALL('"', ''); %>
-                    <% console.log(source_file); %>
-                <script>
-                     let file = document.getElementById('source');
-                     file.setAttribute("'src', '/public/audio/' + '<%= index.data.mp3 %>'");
-                 </script> 
-             <% } %>
+				<%source%>
+
 			<audio controls id="audio_player" >
-                <!--<source id="source">-->
-                 <source id="source"> 
+                  <source id="source" src="<%= source %>">
 			</audio>
+			  <%} else {%>
+				<audio controls id="audio_player" >
+					<source id="source" src="">
+			  </audio>
+			  <%}%>
 			<br>
 
 			<!-- This is a file uploader for MP3s -->
 				<input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>
+				<br>
                 <input class ="upload" type="submit" value="Upload">
 			<br>
 
@@ -69,17 +68,6 @@
 			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
 			<br>
             </form>
-			<!-- create, read, update, delete buttons -->
-			<input type="button" value="Upload" id="upload"">
-			<br>
-			<input type="button" value="Search" id="search" onClick="location.href='/search_table'">
-			<br>
-			<input type="button" value="Update" id="update" onClick="location.href= '/update_table'">
-			<br>
-			<input type="button" value="Delete" id="delete" onClick="location.href='/drop_row'">
-			<br>
-            </form>
-
 		</section>
 
 		<!-- section for database table display -->
@@ -104,6 +92,7 @@
                         {
                             index.forEach(function(data) {
                             %>
+							<% index.source %>
                                 <tr>
                                     <td><%= data.id %></td>
                                     <td><%= data.song %></td>
@@ -111,7 +100,7 @@
                                     <td><%= data.artist %></td>
                                     <td><%= data.uploader %></td>
                                     <td><%= data.mp3 %></td>
-                                    <td><button id = 'selectRow' class="select" onclick="location.href='/select_row?id=' + '<%= data.id%>' + '&mp3=' +'<%=data.mp3%>'">Select</button></td>
+                                    <td><button id = 'selectRow' class="select" onclick="location.href='/select_row?id=' + '<%= data.id%>' + '&mp3=' +'<%= data.mp3 %>' + '&source=' + '/audio/' +'<%=data.mp3%>'">Select</button></td>
                                     <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>' + '&mp3=' + '<%= data.mp3%>'">Delete</button></td>
                                     <td><button class="update" onclick="location.href='/update_row?id=' + '<%data.id%>'">Update</button></td>
                                 </tr>

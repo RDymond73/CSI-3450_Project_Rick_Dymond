@@ -34,29 +34,19 @@ file_input.onchange = () => {
     mp3_src.setAttribute('src', './audio/' + selectedFile.name);
   }
 
-uploadBTN.onclick = function() {
-    let mp3_file = file_input.files[0];
-    audio_player.load();
-    setTimeout(function () {console.log('audio src:', audio_player.currentSrc)});
-    console.log('audio player updated');
-};
+// uploadBTN.onclick = function() {
+//     let mp3_file = file_input.files[0];
+//     audio_player.load();
+//     setTimeout(function () {console.log('audio src:', audio_player.currentSrc)});
+//     console.log('audio player updated');
+// };
 
   const handler = () => {
     const selectedFiles = [...file_input.files];
     console.log(file_input);
   }
 
-//button disabler
- uploadBTN.disabled = true;
- searchBTN.disabled = true;
- updateBTN.disabled = true;
- deleteBTN.disabled = true;
-
 //event listeners
-// document.addEventListener('DOMContentLoaded', loadTable); {
-//     loadTable([]);
-// }
-
  let editBTNS = document.querySelectorAll('.editBTN');
 
  editBTNS.forEach(editBTN => {
@@ -64,22 +54,6 @@ uploadBTN.onclick = function() {
         console.log('Edit Button Clicked', ev);
     });
  });
-
-uploadBTN.addEventListener('click', upload); {
-    upload();
-}
-
-searchBTN.addEventListener('click', search); {
-    search();
-}
-
-updateBTN.addEventListener('click', update); {
-    update();
-}
-
-deleteBTN.addEventListener('click', del); {
-    del();
-}
 
 //deleteRowBTN.addEventListener('click', del); {
   //  del();

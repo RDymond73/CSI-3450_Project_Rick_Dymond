@@ -237,13 +237,17 @@ app.get('/create_table', (req, res) => {
   //select row
   app.get('/select_row', (request, response) => {
     let rowID = request.query.id;
-    let mp3_file = request.query.name;
+    let source = request.query.source;
+    let mp3_file = request.query.mp3;
+    let source_string = '/audio/' + mp3_file.replace(/(^"|"$)/g, '');
     let sql = 'SELECT * FROM music_table WHERE id=' +rowID;
     let databaseName = 'music_db';
+    console.log(source);
+    console.log(source_string);
     database.query(sql, (err, data) => {
       if (err) throw err;
-      console.log(data);
-      response.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index: data, player: 'update'});
+      console.log('Row Selected');
+      response.render(__dirname + '/views/index.ejs', {title: 'Selected Track' , action:'list', index: data, player: 'update', source: source_string});
       console.log('Select Query');
       });
     });

@@ -40,16 +40,18 @@
 			<p id="caption"> Upload an audio file and play your favorite music!  </p>
 
 			<!--This is an audio player for the mp3 files-->
-			<audio controls id="audio_player">
-				 <source src="/public/audio/Tame Impala - Let It Happen (Official Audio).mp3" Impala - Let It Happen (Official Audio).mp3" type="" id="mp3_src">
+            <form action="/insert_table" method="POST" enctype="multipart/form-data">
+
+			<audio controls id="audio_player" >
+                  <source id="source" src="">
 			</audio>
 
 			<br>
 
 			<!-- This is a file uploader for MP3s -->
-			<form action="/public/audio/" method="post" enctype="multipart/form-data">
-				<input type="file" id="file" accept="audio/*" required name="mp3_file"/>
-			</form>
+				<input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>
+				<br>
+                <input class ="upload" type="submit" value="Upload">
 			<br>
 
 			<!-- field for adding database info  -->
@@ -58,31 +60,29 @@
 			<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
 			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
 			<br>
-
-			<!-- create, read, update, delete buttons -->
-			<input type="button" value="Upload" id="upload" onClick="location.href='/insert_table'">
-			<br>
-			<input type="button" value="Search" id="search" onClick="location.href='/search_table'">
-			<br>
-			<input type="button" value="Update" id="update" onClick="location.href= '/update_table'">
-			<br>
-			<input type="button" value="Delete" id="delete" onClick="location.href='/drop_row'">
-			<br>
-
+            </form>
 		</section>
 
 		<!-- section for database table display -->
 		<section id="table_container">
-			<table>
+            <h3 id="music_table_title">Music Table Data</h3>
+			<table id="music_table">
 				<thead>
 					<th>ID</th>
 					<th>Song Name</th>
 					<th>Album Name</th>
+                    <th>Artist name</th>
 					<th>Uploader Name</th>
-					<tbody>
-						
-					</tbody>
-				</thead>
+                    <th>MP3 file</th>
+                    <th>Select</th>
+                    <th>Delete</th>
+                    <th>Update</th>
+                </thead>
+				<tbody>
+                     <tr>
+                        <td colspan="9">No Data Found</td>
+                     </tr>
+				</tbody>
 			</table>
 		</section>
 	</article>
