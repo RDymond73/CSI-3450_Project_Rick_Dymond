@@ -32,10 +32,10 @@ env.config();
 
 const database = mysql.createConnection({
   //database
-  host: 'heroku_2baab068f103003',
+  host: 'us-cdbr-east-06.cleardb.net',
   user: 'b5bb56fadceead',
   password: '781ab838',
-  database: 'music_db',
+  database: 'heroku_2baab068f103003',
   multipleStatments: true
 });
 
