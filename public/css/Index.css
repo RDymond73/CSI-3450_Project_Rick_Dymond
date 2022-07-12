@@ -2,7 +2,7 @@
 
 /* style for body */
 body {
-    background-color: silver;
+    background-color: lightblue;
 }
 
 /* styling for nav bar */
@@ -91,20 +91,56 @@ button.update, button.delete, input.upload, button.select {
     text-align: center;
 }
 
-/* table container styling */
-  table, th, td, tbody{
+/* table styling */
+    /*table, td, tr, td, tbody{
     margin: auto;
     font-family: monospace;
     align-items: center;
     justify-content: center;
     border-collapse: collapse;
     border: 1px solid black;
-    background-color: whitesmoke;
+    background-color: lightcyan;
     padding: auto;
     text-align: center;
+    border-style: solid;
+} */
+/* table styling */
+ /* th {
+    margin: auto;
+    font-family: monospace;
+    align-items: center;
+    justify-content: center;
+    border-collapse: collapse;
+    border: 1px solid black;
+    background-color: darkgray;
+    padding: auto;
+    text-align: center;
+    border-style: solid;
+}  */
+    table, td, th, tr{
+    margin: auto;
+    font-family: monospace;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid silver;
+    background-color: lightcyan;
+    padding: auto;
+    box-shadow: 0 0 0 1px;
+    text-align: center;
+    border-style: solid;
 } 
-
-
+    th {
+    margin: auto;
+    font-family: monospace;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid silver;
+    background-color: lightgray;
+    padding: auto;
+    box-shadow: 0 0 0 1px;
+    text-align: center;
+    border-style: solid;
+}
 /* style for info */
 #info {
     font-family: monospace;

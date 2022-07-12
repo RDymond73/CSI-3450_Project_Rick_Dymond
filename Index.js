@@ -21,20 +21,28 @@ let instance = null;
 env.config();
 
 //database connection object
+// const database = mysql.createConnection({
+//       //database
+//       host: 'localhost',
+//       user: 'root',
+//       password: '',
+//       database: 'music_db',
+//       multipleStatments: true
+// });
+
 const database = mysql.createConnection({
-      //database
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'music_db',
-      multipleStatments: true
+  //database
+  host: 'heroku_2baab068f103003',
+  user: 'b5bb56fadceead',
+  password: '781ab838',
+  database: 'music_db',
+  multipleStatments: true
 });
 
 //database connection function
 database.connect(function(err) {
   if(err) {
-    console.log('Error no connection');
-    throw err;
+    console.log('Error no connection to database');
   }
   console.log('Connected to Database');
 });
@@ -79,7 +87,6 @@ app.use(cors());
 
 app.use(fileUpload());
 
-//app.use(upload());
 
 
 //test server via http
@@ -289,28 +296,28 @@ app.get('/create_table', (req, res) => {
   // });
 
   //upload file I hope
-  app.post('/insert_table2', function(request, response) {
-    if(request.files) {
-      let rowID = 22;
-      let song =  request.query.song;
-      let album = request.query.album;
-      let artist = request.query.artist;
-      let uploader = request.query.uploader;
-      let mp3_file = request.files.mp3_file;
-      console.log(song);
-      console.log(album);
-      console.log(artist);
-      console.log(uploader);
-      let sql = "INSERT INTO `mp3_table` (id, `mp3`) VALUES (NULL," + JSON.stringify(mp3_file.name) + ");";
-      database.query(sql, (err, result) => {
-        if (err) throw err;
+  // app.post('/insert_table2', function(request, response) {
+  //   if(request.files) {
+  //     let rowID = 22;
+  //     let song =  request.query.song;
+  //     let album = request.query.album;
+  //     let artist = request.query.artist;
+  //     let uploader = request.query.uploader;
+  //     let mp3_file = request.files.mp3_file;
+  //     console.log(song);
+  //     console.log(album);
+  //     console.log(artist);
+  //     console.log(uploader);
+  //     let sql = "INSERT INTO `mp3_table` (id, `mp3`) VALUES (NULL," + JSON.stringify(mp3_file.name) + ");";
+  //     database.query(sql, (err, result) => {
+  //       if (err) throw err;
         
-      });
-      //console.log(mp3_file);
-      mp3_file.mv('./public/audio/');
-    }
-    response.redirect('/home');
-  });
+  //     });
+  //     //console.log(mp3_file);
+  //     mp3_file.mv('./public/audio/');
+  //   }
+  //   response.redirect('/home');
+  // });
 
   //drop row
   app.all('/drop_row', (req, res) => {

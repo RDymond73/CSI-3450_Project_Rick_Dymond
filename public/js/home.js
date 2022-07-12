@@ -1,8 +1,3 @@
-//const { response } = require("express");
-
-// { json } = require("body-parser");
-
-//const { threadId } = require("worker_threads");
 
 //variables
 let uploader = document.getElementById('file_input');
@@ -20,11 +15,12 @@ let artistField = document.getElementById('artist_name');
 let albumField =document.getElementById('album');
 let uploaderField = document.getElementById('uploader_name');
 let audio_player = document.getElementById('audio_player');
-
-//let deleteRowBTN = document.getElementsByID('deleteRow');
-
 let updateRowBTN = document.getElementsByClassName('update');
-
+let editBTNS = document.querySelectorAll('.editBTN');
+const handler = () => {
+    const selectedFiles = [...file_input.files];
+    console.log(file_input);
+  }
 file_input.onchange = () => {
     let sourceTag = 'source';
     const selectedFile = file_input.files[0];
@@ -41,13 +37,7 @@ file_input.onchange = () => {
 //     console.log('audio player updated');
 // };
 
-  const handler = () => {
-    const selectedFiles = [...file_input.files];
-    console.log(file_input);
-  }
-
 //event listeners
- let editBTNS = document.querySelectorAll('.editBTN');
 
  editBTNS.forEach(editBTN => {
     editBTN.addEventListener('click', function handleClick(ev) {
@@ -55,50 +45,46 @@ file_input.onchange = () => {
     });
  });
 
-//deleteRowBTN.addEventListener('click', del); {
-  //  del();
-//}
-
 uploader.addEventListener('change', handler); {
     upload();
 }
 
-songField.addEventListener('input', checkFields); {
-    if (song.value != "") {
-    checkFields(song);
-    UploadcheckFields(song);
-    }
-}
+// songField.addEventListener('input', checkFields); {
+//     if (song.value != "") {
+//     checkFields(song);
+//     UploadcheckFields(song);
+//     }
+// }
 
-songField.addEventListener('input', UploadcheckFields); {
-    if (song.value != "") {
-    UploadcheckFields(song);
-    }
-}
+// songField.addEventListener('input', UploadcheckFields); {
+//     if (song.value != "") {
+//     UploadcheckFields(song);
+//     }
+// }
 
-artistField.addEventListener('input', checkFields); {
-    if (artist.value != "") {
-    checkFields(artist);
-    }
-}
+// artistField.addEventListener('input', checkFields); {
+//     if (artist.value != "") {
+//     checkFields(artist);
+//     }
+// }
 
-artistField.addEventListener('input', UploadcheckFields); {
-    if (song.value != "") {
-    UploadcheckFields(artist);
-    }
-}
+// artistField.addEventListener('input', UploadcheckFields); {
+//     if (song.value != "") {
+//     UploadcheckFields(artist);
+//     }
+// }
 
-albumField.addEventListener('input', checkFields); {
-    if (album.value != "") {
-    checkFields(album);
-    }
-}
+// albumField.addEventListener('input', checkFields); {
+//     if (album.value != "") {
+//     checkFields(album);
+//     }
+// }
 
-albumField.addEventListener('input', UploadcheckFields); {
-    if (album.value != "") {
-    UploadcheckFields(album);
-    }
-}
+// albumField.addEventListener('input', UploadcheckFields); {
+//     if (album.value != "") {
+//     UploadcheckFields(album);
+//     }
+// }
 
 uploaderField.addEventListener('input', checkFields); {
     if (uploader_name.value != "") {
@@ -139,23 +125,7 @@ function UploadcheckFields (ev) {
     }
 };
 
-//load database data into index.html
-// function loadTable(data) {
-//     const table = document.querySelector('table tbody');
-//     //const table_row = document.querySelector('tbody tr');
-//     //const table_data = document.querySelector('tr td');
-//     //let tableHtml = "";
-  
-//     if(data.length === 0) {
-//         //table.innerHTML = "<tr><td class='no-data' colspan='5' id='data_placeholder'>No Data</td></tr>";
-//     } else {
-//         //table.innerHTML = table_data.value;
-//     };
-//     console.log("Table loaded");
-//   }
-
-
-//functions
+// client interaction functions
 function upload(ev) {
     uploadBTN.onclick = function () {
 
@@ -165,27 +135,10 @@ function upload(ev) {
         let album_input = album.value;
         let artist_input = artist.value;
         let uploader_input = uploader_name.value;
-
         console.log(song_input);
         console.log(album_input);
         console.log(artist_input);
         console.log(uploader_input);
-        //console.log(mp3_file.value);
-
-        // let uploadParm = {
-        //     params: {
-        //     song: song_input,
-        //     album: album_input,
-        //     artist : artist_input,
-        //     uploader: uploader_input,
-        //     mp3: mp3_file,
-        //     }
-        // };
-        // console.log(uploadParm);
-        // JSON.stringify(uploadParm);
-        // console.log(uploadParm);
-        //location.href=('/insert_table?[object%20Object]?' + JSON.stringify(uploadParm));
-
         location.href="/insert_table?" + 'song=' + song_input + '&' + 'album=' + album_input + '&' + 'artist=' + artist_input + '&' + 'uploader=' + uploader_input + '&' + 'mp3=' + JSON.stringify(mp3_file.name);
     }
     let uploadGood = document.createElement("p")
@@ -248,52 +201,3 @@ function del(ev) {
     console.log('Delete Succesful');
     }
 }
-//test
-// var app = new function() {
-//     this.el = document.getElementById('music_table');
-//     this.music_array = [] +1;
-
-//     this.FetchAll = function() {
-//        let data = '';
-
-// if (this.music_array.length>0) {
-// for(i=0;1<this.music_array.length; i++) {
-//                 data+='<tr>';
-//       data+='<td>'+(i+1) +". " +this.music_array[i] + "</td>";
-//               data+='<td><button onclick="app.Delete('+i+')"class="btn btn-danger">Delete</button></td>';
-//            data+='<td><button onclick="app.Edit('+i+')"class="btn btn-warning">Edit</button></td>';
-//             }
-//         }
-
-//         //this.Count(this.song.length);
-//         //return this.el.innerHTML = data
-//     };
-
-//     this.Add = function(){
-//         el = document.getElementById('song');
-//         let song = el.value;
-//         if(song){
-//            this.song.push(song.trim());
-//            song.value='';
-//            this.FetchAll();
-// }
-//     };
-
-//    this.Edit = function(item){
-//     el = document.getElementById('music_table');
-//     this.el.value = this[item]
-
-// };
-
-//     this.Delete = function (item) {
-//         this.song.splice(item,1)
-//         this.FetchAll();
-
-// };
-
-// this.Count = function(data) {
-// return threadId.el.innerHTML = data
-//    };
- //}
-
-//app.FetchAll();
