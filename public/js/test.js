@@ -11,3 +11,6 @@ let uploadParm = {
 JSON.stringify(uploadParm);
 
 console.log(uploadParm);
+
+//edit row ntm
+//<td><button class="update" onclick="location.href='/update_row?id=' + '<%= data.id%>' + '&song=' + '<%= song_input %>' +'&album=' + '<%= album_input %>' + '&artist=' + '<%= artist_input%>' + '&uploader=' + '<%= uploader_input%>'">Edit<button></td>

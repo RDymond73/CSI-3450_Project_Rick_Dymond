@@ -33,7 +33,6 @@
 		<!-- this is the gif section of the article -->
 		<section id="gif_container">
 			<img src="./images/music_gif.gif" id="music_gif" alt="" srcset="">
-
 		</section>
 
 		<!-- this is the music player section of the article -->
@@ -41,31 +40,37 @@
 			<p id="caption"> Upload an audio file and play your favorite music!  </p>
 
 			<!--This is an audio player for the mp3 files-->
-			<audio controls id="audio_player">
-				 <source src="" id="mp3_src">
-			</audio>
+            <form action="/insert_table" method="POST" enctype="multipart/form-data">
 
+              <% if (player!="") { %>
+                <% data.id %>
+                    <% let source_file = index.data.id.replaceALL('"', ''); %>
+                    <% console.log(source_file); %>
+                <script>
+                     let file = document.getElementById('source');
+                     file.setAttribute("'src', '/public/audio/' + '<%= index.data.mp3 %>'");
+                 </script> 
+             <% } %>
+			<audio controls id="audio_player" >
+                <!--<source id="source">-->
+                 <source id="source"> 
+			</audio>
 			<br>
 
 			<!-- This is a file uploader for MP3s -->
-			<form action="/" method="POST" enctype="multipart/form-data">
 				<input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>
-			</form>
+                <input class ="upload" type="submit" value="Upload">
 			<br>
 
 			<!-- field for adding database info  -->
-            <form action="javascript:void(0);" method="POST"
-            onsubmit = "app.Add()">
 			<input type="text" name="song" id="song" width="100px" required placeholder="Song title">
 			<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
 			<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
 			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
 			<br>
             </form>
-
 			<!-- create, read, update, delete buttons -->
-            <form method="POST" onsubmit="">
-			<input type="button" value="Upload" id="upload" onClick="location.href='/home'">
+			<input type="button" value="Upload" id="upload"">
 			<br>
 			<input type="button" value="Search" id="search" onClick="location.href='/search_table'">
 			<br>
@@ -79,7 +84,7 @@
 
 		<!-- section for database table display -->
 		<section id="table_container">
-            <p id="music_table_title"><%= title %></p>
+            <h3 id="music_table_title"><%= title %></h3>
             <% if (action == 'add') { %>
                 <% } else { %>
 			<table id="music_table">
@@ -95,8 +100,6 @@
                     <th>Update</th>
                 </thead>
 				<tbody>
-						<!-- <tr><td colspan="">Test</td></tr>
-                        <tr><td colspan=""></d>test</td></tr> -->
                         <% if(index.length > 0)
                         {
                             index.forEach(function(data) {
@@ -108,11 +111,9 @@
                                     <td><%= data.artist %></td>
                                     <td><%= data.uploader %></td>
                                     <td><%= data.mp3 %></td>
-                                    <td>
-                                        <a href="/drop_row?<%= %>"  class="update"></a>
-                                    </td>
-                                    <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>'">Delete</button></td>
-                                    <td><button class="update">Update</button></td>
+                                    <td><button id = 'selectRow' class="select" onclick="location.href='/select_row?id=' + '<%= data.id%>' + '&mp3=' +'<%=data.mp3%>'">Select</button></td>
+                                    <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>' + '&mp3=' + '<%= data.mp3%>'">Delete</button></td>
+                                    <td><button class="update" onclick="location.href='/update_row?id=' + '<%data.id%>'">Update</button></td>
                                 </tr>
                         <%
                             });

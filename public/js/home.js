@@ -30,8 +30,8 @@ file_input.onchange = () => {
     const selectedFile = file_input.files[0];
     console.log(selectedFile);
     loadPlayer = document.getElementById('audio_player');
-    mp3_src = document.getElementById('mp3_src');
-    mp3_src.setAttribute('src', '../audio/' + selectedFile.name);
+    mp3_src = document.getElementById('source');
+    mp3_src.setAttribute('src', './audio/' + selectedFile.name);
   }
 
 uploadBTN.onclick = function() {
@@ -56,6 +56,14 @@ uploadBTN.onclick = function() {
 // document.addEventListener('DOMContentLoaded', loadTable); {
 //     loadTable([]);
 // }
+
+ let editBTNS = document.querySelectorAll('.editBTN');
+
+ editBTNS.forEach(editBTN => {
+    editBTN.addEventListener('click', function handleClick(ev) {
+        console.log('Edit Button Clicked', ev);
+    });
+ });
 
 uploadBTN.addEventListener('click', upload); {
     upload();
@@ -188,7 +196,7 @@ function upload(ev) {
         console.log(album_input);
         console.log(artist_input);
         console.log(uploader_input);
-        console.log(mp3_file.value);
+        //console.log(mp3_file.value);
 
         // let uploadParm = {
         //     params: {
@@ -204,7 +212,7 @@ function upload(ev) {
         // console.log(uploadParm);
         //location.href=('/insert_table?[object%20Object]?' + JSON.stringify(uploadParm));
 
-        location.href="/insert_table?" + 'song=' + song_input + '&' + 'album=' + album_input + '&' + 'artist=' + artist_input + '&' + 'uploader=' + uploader_input;
+        location.href="/insert_table?" + 'song=' + song_input + '&' + 'album=' + album_input + '&' + 'artist=' + artist_input + '&' + 'uploader=' + uploader_input + '&' + 'mp3=' + JSON.stringify(mp3_file.name);
     }
     let uploadGood = document.createElement("p")
     uploadGood.id = "uploadGood"

@@ -74,6 +74,15 @@ nav {
     display: flex;
 }
 
+button.update, button.delete, input.upload, button.select {
+    margin: auto;
+    font-family: monospace;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}
+
 /* styling for successful functions */
 #uploadGood, #searchGood, #updateGood, #delGood{
     margin: auto;
