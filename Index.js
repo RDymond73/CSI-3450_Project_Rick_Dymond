@@ -98,8 +98,6 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 
-app.use(cors());
-
 //app.use(fileUpload());
 
 //app.use(upload());
@@ -110,11 +108,8 @@ app.use(express.urlencoded({
 }));
 
 app.use(cors({
-  origin: 'https://test222222222godhelpme.herokuapp.com',
-  method: 'OPTIONS'
+   origin: 'https://test222222222godhelpme.herokuapp.com'
 }));
-//.sccs
-//app.use(fileUpload());
 
 //test server via http
 app.all("/", (req, res) => {
@@ -347,20 +342,20 @@ app.get('/create_table', (req, res) => {
     });
   });
 
-  app.use((req, res,) => {
-    res.header("Access-Control-Allow-Origin", "https://s3.console.aws.amazon.com")
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested, Content-Type, Accept Authorization"
-    )
-    if (req.method === "OPTIONS") {
-      res.header(
-        "Access-Control-Allow-Methods",
-        "POST, PUT, PATCH, GET, DELETE"
-      )
-      return res.status(200).json({})
-    }
-  })
+  // app.use((req, res,) => {
+  //   res.header("Access-Control-Allow-Origin", "https://localhost:3000");
+  //   res.header(
+  //     "Access-Control-Allow-Headers",
+  //     "Origin, X-Requested, Content-Type, Accept Authorization"
+  //   )
+  //   if (req.method === "OPTIONS") {
+  //     res.header(
+  //       "Access-Control-Allow-Methods",
+  //       "POST, PUT, PATCH, GET, DELETE"
+  //     )
+  //     return res.status(200).json({})
+  //   }
+  // })
 //port for application listening
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
