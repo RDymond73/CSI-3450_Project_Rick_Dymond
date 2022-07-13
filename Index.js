@@ -89,7 +89,7 @@ app.all("/", (req, res) => {
   console.log('Upload Reponse Successful');
   });
 
-app.all('/insert_table', function(req, res){
+app.post('/insert_table', function(req, res){
   let mp3_data = req.body;
   let mp3_file = req.files.mp3_file;
 
