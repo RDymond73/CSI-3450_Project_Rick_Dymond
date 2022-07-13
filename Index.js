@@ -186,9 +186,8 @@ app.get('/create_table', (req, res) => {
       } 
     });
     response.redirect('/home');
-  });
     console.log('Insert Query Successful');
-  
+  });
 
   app.all('/update_row', (req, res) => {
     let rowID = req.query.id;
