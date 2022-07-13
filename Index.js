@@ -69,207 +69,207 @@ app.get("/", (req, res) => {
   });
 
   //upload mp3 file
-//  app.get("/upload", (req, res) => {
-//   res.redirect('/home');
-//   console.log('Upload Reponse Successful');
-//   });
+ app.get("/upload", (req, res) => {
+  res.redirect('/home');
+  console.log('Upload Reponse Successful');
+  });
 
-// app.all('/insert_table', function(req, res){
-//   let mp3_data = req.body;
-//   let mp3_file = req.files.mp3_file;
+app.all('/insert_table', function(req, res){
+  let mp3_data = req.body;
+  let mp3_file = req.files.mp3_file;
 
-//   mp3_file.mv('./audio/' + mp3_file.name, function (error) {
-//     if(error) {
-//     console.log('MP3 Upload not succesful');
-//     console.log(error);
-//   }else{
-//     console.log('MP3 Upload Succesful');
-//   }
-//   console.log(mp3_file);
-//   });
+  mp3_file.mv('./audio/' + mp3_file.name, function (error) {
+    if(error) {
+    console.log('MP3 Upload not succesful');
+    console.log(error);
+  }else{
+    console.log('MP3 Upload Succesful');
+  }
+  console.log(mp3_file);
+  });
 
-//   res.redirect('/home');
-// });
+  res.redirect('/home');
+});
 
 //create db for admin
-// app.get('/create_db', (req, res) => {
-//    sql = 'CREATE DATABASE music_db';
-//    database.query(sql, (err, result) => {
-//    if(err) throw err;
-//    console.log(result);
-//    console.log('Database music_db Created');
-//    res.redirect('/home');
-//    });
-// });
+app.get('/create_db', (req, res) => {
+   sql = 'CREATE DATABASE music_db';
+   database.query(sql, (err, result) => {
+   if(err) throw err;
+   console.log(result);
+   console.log('Database music_db Created');
+   res.redirect('/home');
+   });
+});
    
 //drop db for admin
-// app.get('/drop_db', (req, res) => {
-//     sql = 'DROP DATABASE music_db';
-//     database.query(sql, (err, result) => {
-//     if(err) throw err;
-//     console.log(result);
-//     res.redirect('/home');
-//     });
-//   });
+app.get('/drop_db', (req, res) => {
+    sql = 'DROP DATABASE music_db';
+    database.query(sql, (err, result) => {
+    if(err) throw err;
+    console.log(result);
+    res.redirect('/home');
+    });
+  });
 
 //create table for admin
-// app.get('/create_table', (req, res) => {
-//     let sql = 'CREATE TABLE music_table(id INT AUTO_INCREMENT PRIMARY KEY, song VARCHAR(255), album VARCHAR(255), artist VARCHAR(255), uploader VARCHAR(255), mp3 VARCHAR(255))';
-//     database.query(sql, (err, result) => {
-//       if (err) throw err;
-//       console.log(result);
-//     });
-//     res.redirect('/home');
-//     console.log('Table Created');
-//   });
+app.get('/create_table', (req, res) => {
+    let sql = 'CREATE TABLE music_table(id INT AUTO_INCREMENT PRIMARY KEY, song VARCHAR(255), album VARCHAR(255), artist VARCHAR(255), uploader VARCHAR(255), mp3 VARCHAR(255))';
+    database.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    res.redirect('/home');
+    console.log('Table Created');
+  });
 
-  // app.get('/create_mp3table', (req, res) => {
-  //   let sql = 'CREATE TABLE mp3_table(id INT AUTO_INCREMENT PRIMARY KEY, mp3 BLOB)';
-  //   database.query(sql, (err, result) => {
-  //     if (err) throw err;
-  //     console.log(result);
-  //   });
-  //   res.redirect('/home');
-  //   console.log('MP3 Table Created');
-  // });
+  app.get('/create_mp3table', (req, res) => {
+    let sql = 'CREATE TABLE mp3_table(id INT AUTO_INCREMENT PRIMARY KEY, mp3 BLOB)';
+    database.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    res.redirect('/home');
+    console.log('MP3 Table Created');
+  });
 
 
 
 //drop table from database for admin
-  // app.get('/drop_table', (req, res) => {
-  //   let sql = 'DROP TABLE music_table';
-  //   database.query(sql, (err, result) => {
-  //     if (err) throw err;
-  //     console.log(result);
-  //   });
-  //   res.redirect('/home');
-  //   console.log('Table Deleted');
-  // });
+  app.get('/drop_table', (req, res) => {
+    let sql = 'DROP TABLE music_table';
+    database.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    res.redirect('/home');
+    console.log('Table Deleted');
+  });
 
-  //database querys
-  //insert row into music_table
-  // app.post('/insert_table', (request, response) => {
+  database querys
+  insert row into music_table
+  app.post('/insert_table', (request, response) => {
     
-  //   let song =  request.body.song;
-  //   let album = request.body.album;
-  //   let artist = request.body.artist_name;
-  //   let uploader = request.body.uploader_name;
-  //   let mp3_file = request.files.mp3_file;
-  //   console.log(song);
-  //   console.log(album);
-  //   console.log(artist);
-  //   console.log(uploader);
-  //   console.log(mp3_file);
-  //   let sql = "INSERT INTO `music_table`(`id`, `song`, `album`, `artist`, `uploader`, `mp3` ) VALUES (NULL, " + "'" + song + " ', " + "'" + album + "', '" + artist + "' , " + "'" + uploader + "', '" + JSON.stringify(mp3_file.name) + "');";
-  //   database.query(sql, (err, result) => {
-  //     if (err) throw err;
-  //     console.log(result);
-  //     mp3_file.mv("public/audio/" + mp3_file.name, function(error) {
-  //       if (error) {
-  //         console.log('error moving audio file');
-  //       } else {
-  //         console.log('audio file moved');
-  //       } 
-  //     });
-  //   });
-  //   mp3_file.mv("/public/audio/" + mp3_file.name, function(error) {
-  //     if (error) {
-  //       console.log('error moving audio file');
-  //     } else {
-  //       console.log('audio file moved');
-  //     } 
-  //   });
-  //   response.redirect('/home');
-  // });
-  //   console.log('Insert Query Successful');
+    let song =  request.body.song;
+    let album = request.body.album;
+    let artist = request.body.artist_name;
+    let uploader = request.body.uploader_name;
+    let mp3_file = request.files.mp3_file;
+    console.log(song);
+    console.log(album);
+    console.log(artist);
+    console.log(uploader);
+    console.log(mp3_file);
+    let sql = "INSERT INTO `music_table`(`id`, `song`, `album`, `artist`, `uploader`, `mp3` ) VALUES (NULL, " + "'" + song + " ', " + "'" + album + "', '" + artist + "' , " + "'" + uploader + "', '" + JSON.stringify(mp3_file.name) + "');";
+    database.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      mp3_file.mv("public/audio/" + mp3_file.name, function(error) {
+        if (error) {
+          console.log('error moving audio file');
+        } else {
+          console.log('audio file moved');
+        } 
+      });
+    });
+    mp3_file.mv("/public/audio/" + mp3_file.name, function(error) {
+      if (error) {
+        console.log('error moving audio file');
+      } else {
+        console.log('audio file moved');
+      } 
+    });
+    response.redirect('/home');
+  });
+    console.log('Insert Query Successful');
   
 
-  // app.all('/update_row', (req, res) => {
-  //   let rowID = req.query.id;
-  //   let song =  req.query.song;
-  //   let album = req.query.album;
-  //   let artist = req.query.artist;
-  //   let uploader = req.query.uploader;
-  //   let mp3_file = req.files.mp3_file;
-  //   console.log(song);
-  //   console.log(album);
-  //   console.log(artist);
-  //   console.log(uploader);
-  //   let sql = 'UPDATE music_table SET (' + song + ", '" + album +"', '" + artist + "', '" + uploader + ') WHERE id=' + rowID ;
-  //   database.query(sql, (err, result) => {
-  //     if (err) throw err;
-  //     console.log(result);
-  //   });
-  //   res.redirect('/home');
-  //   console.log('Row Deleted');
-  // });
+  app.all('/update_row', (req, res) => {
+    let rowID = req.query.id;
+    let song =  req.query.song;
+    let album = req.query.album;
+    let artist = req.query.artist;
+    let uploader = req.query.uploader;
+    let mp3_file = req.files.mp3_file;
+    console.log(song);
+    console.log(album);
+    console.log(artist);
+    console.log(uploader);
+    let sql = 'UPDATE music_table SET (' + song + ", '" + album +"', '" + artist + "', '" + uploader + ') WHERE id=' + rowID ;
+    database.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    res.redirect('/home');
+    console.log('Row Deleted');
+  });
 
   //select row
-  // app.get('/select_row', (request, response) => {
-  //   let rowID = request.query.id;
-  //   let source = request.query.source;
-  //   let mp3_file = request.query.mp3;
-  //   let source_string = '/audio/' + mp3_file.replace(/(^"|"$)/g, '');
-  //   let sql = 'SELECT * FROM music_table WHERE id=' +rowID;
-  //   console.log(source);
-  //   console.log(source_string);
-  //   database.query(sql, (err, data) => {
-  //     if (err) throw err;
-  //     console.log('Row Selected');
-  //     response.render(__dirname + '/views/index.ejs', {title: 'Selected Track' , action:'list', index: data, player: 'update', source: source_string});
-  //     console.log('Select Query');
-  //     });
-  //   });
+  app.get('/select_row', (request, response) => {
+    let rowID = request.query.id;
+    let source = request.query.source;
+    let mp3_file = request.query.mp3;
+    let source_string = '/audio/' + mp3_file.replace(/(^"|"$)/g, '');
+    let sql = 'SELECT * FROM music_table WHERE id=' +rowID;
+    console.log(source);
+    console.log(source_string);
+    database.query(sql, (err, data) => {
+      if (err) throw err;
+      console.log('Row Selected');
+      response.render(__dirname + '/views/index.ejs', {title: 'Selected Track' , action:'list', index: data, player: 'update', source: source_string});
+      console.log('Select Query');
+      });
+    });
 
 
   //search
-  // app.all('/search_table', (request, response) => {
-  //   let sql = 'SELECT * FROM music_table';
-  //   database.query(sql, (err, result) => {
-  //     if (err) throw err;
-  //     console.log(result);
-  //   });
-  //   response.redirect('/home');
-  //   console.log('Search Querry');
-  // });
+  app.all('/search_table', (request, response) => {
+    let sql = 'SELECT * FROM music_table';
+    database.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    response.redirect('/home');
+    console.log('Search Querry');
+  });
 
   //Load table into index.ejs
-  // app.all('/home', (req, res) => {
-  // let sql = 'SELECT * FROM music_table ORDER BY id';
-  // database.query(sql, (err, data) => {
-  //   if (err) throw err;
-  //   console.log('Database table loaded');
-  //   res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index: data, player: ""});
-  //   });
-  // });
+  app.all('/home', (req, res) => {
+  let sql = 'SELECT * FROM music_table ORDER BY id';
+  database.query(sql, (err, data) => {
+    if (err) throw err;
+    console.log('Database table loaded');
+    res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index: data, player: ""});
+    });
+  });
 
-  // app.all('/home', (req, res) => {
-  //   console.log(req.query);
-  //   console.log(res.query);
-  //   let sql = 'SELECT * FROM mp3_table ORDER BY id';
-  //   database.query(sql, (err, data) => {
-  //     if (err) throw err;
-  //     console.log(data);
-  //     res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index:data});
-  //   });
+  app.all('/home', (req, res) => {
+    console.log(req.query);
+    console.log(res.query);
+    let sql = 'SELECT * FROM mp3_table ORDER BY id';
+    database.query(sql, (err, data) => {
+      if (err) throw err;
+      console.log(data);
+      res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index:data});
+    });
 
-  // });
+  });
 
   //drop row
-  // app.all('/drop_row', (req, res) => {
-  //   let rowID = req.query.id;
-  //   let mp3 = req.query.mp3;
-  //   let mp3_string = mp3.replace(/(^"|"$)/g, '');
-  //   let sql = 'DELETE FROM music_table WHERE id=' + rowID;
-  //   let databaseName = 'music_db';
-  //   database.query(sql, (err, result) => {
-  //     if (err) throw err;
-  //     console.log(result);
-  //   });
-  //   fs.unlinkSync('./public/audio/' + mp3_string);
-  //   res.redirect('/home');
-  //   console.log('Row Deleted');
-  // });
+  app.all('/drop_row', (req, res) => {
+    let rowID = req.query.id;
+    let mp3 = req.query.mp3;
+    let mp3_string = mp3.replace(/(^"|"$)/g, '');
+    let sql = 'DELETE FROM music_table WHERE id=' + rowID;
+    let databaseName = 'music_db';
+    database.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    fs.unlinkSync('./public/audio/' + mp3_string);
+    res.redirect('/home');
+    console.log('Row Deleted');
+  });
 
 //port for application listening
 const PORT = process.env.PORT || 3000;
