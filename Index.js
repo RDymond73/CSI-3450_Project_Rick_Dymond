@@ -20,7 +20,7 @@ const app = express();
 let instance = null;
 env.config();
 
-//database connection object
+//connect web app to local database
 // const database = mysql.createConnection({
 //       //database
 //       host: 'localhost',
@@ -30,8 +30,8 @@ env.config();
 //       multipleStatments: true
 // });
 
+//connect web app to heroku database
 const database = mysql.createConnection({
-  //database
   host: 'us-cdbr-east-06.cleardb.net',
   user: 'b5bb56fadceead',
   password: '781ab838',
@@ -45,30 +45,6 @@ database.connect(function(err) {
   }
   console.log('Connected to Database');
 });
-
-//class DBService {
-  //static getDbServiceInstance() {
-  //  return instance ? instance : new Dbservice();
-  //}
-
- // async getALLData() {
-   // try {
-   //   const response = await new Promise((resolve, reject) => {
-    //    const query = "SELECT * FROM music_table WHERE song = ?;";
-
-     //   database.query(query, (error, results) => {
-   //       if (error) reject(new Error(error.message));
-    //      resolve(results);
-   //     })
-   //   });
-   //   console.log(reponse);
-  //  } catch (error) {
-  //    console.log(error);
-  //  }
- // }
-//}
-
-//module.exports = DBService;
 
 //middleware & routers
 app.use(express.static(path.join(__dirname, "public")));
@@ -187,7 +163,6 @@ app.get('/create_table', (req, res) => {
     let artist = request.body.artist_name;
     let uploader = request.body.uploader_name;
     let mp3_file = request.files.mp3_file;
-    //let mp3_file = request.query.mp3_file;
     console.log(song);
     console.log(album);
     console.log(artist);
@@ -213,9 +188,8 @@ app.get('/create_table', (req, res) => {
       } 
     });
     response.redirect('/home');
-    //response.render(__dirname + '/views/index.ejs', {title: 'Music Table AYO' , action:'list', index: data});
   });
-    //console.log('Insert Query');
+    console.log('Insert Query Successful');
   
 
   app.all('/update_row', (req, res) => {
@@ -230,7 +204,6 @@ app.get('/create_table', (req, res) => {
     console.log(artist);
     console.log(uploader);
     let sql = 'UPDATE music_table SET (' + song + ", '" + album +"', '" + artist + "', '" + uploader + ') WHERE id=' + rowID ;
-    let databaseName = 'music_db';
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -246,7 +219,6 @@ app.get('/create_table', (req, res) => {
     let mp3_file = request.query.mp3;
     let source_string = '/audio/' + mp3_file.replace(/(^"|"$)/g, '');
     let sql = 'SELECT * FROM music_table WHERE id=' +rowID;
-    let databaseName = 'music_db';
     console.log(source);
     console.log(source_string);
     database.query(sql, (err, data) => {
@@ -261,8 +233,6 @@ app.get('/create_table', (req, res) => {
   //search
   app.all('/search_table', (request, response) => {
     let sql = 'SELECT * FROM music_table';
-    //const db = DBService.getDbServiceInstance();
-    //const result = DBService.getALLData();
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -271,7 +241,7 @@ app.get('/create_table', (req, res) => {
     console.log('Search Querry');
   });
 
-  //Load table into EJS
+  //Load table into index.ejs
   app.all('/home', (req, res) => {
   let sql = 'SELECT * FROM music_table ORDER BY id';
   database.query(sql, (err, data) => {
@@ -291,30 +261,6 @@ app.get('/create_table', (req, res) => {
   //     res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index:data});
   //   });
 
-  // });
-
-  //upload file I hope
-  // app.post('/insert_table2', function(request, response) {
-  //   if(request.files) {
-  //     let rowID = 22;
-  //     let song =  request.query.song;
-  //     let album = request.query.album;
-  //     let artist = request.query.artist;
-  //     let uploader = request.query.uploader;
-  //     let mp3_file = request.files.mp3_file;
-  //     console.log(song);
-  //     console.log(album);
-  //     console.log(artist);
-  //     console.log(uploader);
-  //     let sql = "INSERT INTO `mp3_table` (id, `mp3`) VALUES (NULL," + JSON.stringify(mp3_file.name) + ");";
-  //     database.query(sql, (err, result) => {
-  //       if (err) throw err;
-        
-  //     });
-  //     //console.log(mp3_file);
-  //     mp3_file.mv('./public/audio/');
-  //   }
-  //   response.redirect('/home');
   // });
 
   //drop row
