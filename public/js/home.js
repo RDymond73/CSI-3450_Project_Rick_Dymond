@@ -164,10 +164,7 @@ function getSignedRequest(file){
         }
       }
     };
-    xhr.send({
-        method: 'OPTIONS',
-        file: file
-    });
+    xhr.send()
   };
 
 // client interaction functions
