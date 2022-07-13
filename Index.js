@@ -110,7 +110,8 @@ app.use(express.urlencoded({
 }));
 
 app.use(cors({
-  origin: 'https://test222222222godhelpme.herokuapp.com' 
+  origin: 'https://test222222222godhelpme.herokuapp.com',
+  method: 'OPTIONS'
 }));
 //.sccs
 //app.use(fileUpload());
