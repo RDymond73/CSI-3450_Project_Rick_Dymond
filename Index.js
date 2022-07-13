@@ -52,7 +52,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set('view engine', 'ejs');
 
 app.use(express.json());
-S
+
 app.use(express.urlencoded({ 
   extended: true, 
   SameSite: 'none'
