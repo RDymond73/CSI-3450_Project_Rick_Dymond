@@ -14,6 +14,7 @@ let songField = document.getElementById('song');
 let artistField = document.getElementById('artist_name');
 let albumField =document.getElementById('album');
 let uploaderField = document.getElementById('uploader_name');
+let mp3_text = document.getElementById('mp3_text');
 let audio_player = document.getElementById('audio_player');
 let updateRowBTN = document.getElementsByClassName('update');
 let editBTNS = document.querySelectorAll('.editBTN');
@@ -25,10 +26,16 @@ file_input.onchange = () => {
     let sourceTag = 'source';
     const selectedFile = file_input.files[0];
     console.log(selectedFile);
+    mp3_text.value = selectedFile.name;
     loadPlayer = document.getElementById('audio_player');
     mp3_src = document.getElementById('source');
     mp3_src.setAttribute('src', './audio/' + selectedFile.name);
-  }
+
+        if(selectedFile == null){
+          return alert('No file selected.');
+        }
+        getSignedRequest(selectedFile);
+      };
 
 // uploadBTN.onclick = function() {
 //     let mp3_file = file_input.files[0];
@@ -125,6 +132,40 @@ function UploadcheckFields (ev) {
         console.log('Upload Button enabled');
     }
 };
+
+function uploadFile(file, signedRequest, url){
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', signedRequest);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          document.getElementById('preview').src = url;
+          document.getElementById('avatar-url').value = url;
+        }
+        else{
+          alert('Could not upload file.');
+        }
+      }
+    };
+    xhr.send(file);
+  };
+
+function getSignedRequest(file){
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/sign-s3?file-name=${encodeURIComponent(file.name)}&file-type=${file.type}`);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          const response = JSON.parse(xhr.responseText);
+          uploadFile(file, response.signedRequest, response.url);
+        }
+        else{
+          alert('Could not get signed URL.');
+        }
+      }
+    };
+    xhr.send();
+  }
 
 // client interaction functions
 // function upload(ev) {

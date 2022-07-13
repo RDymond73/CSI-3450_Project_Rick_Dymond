@@ -49,7 +49,7 @@ nav {
     text-align: center;
 }
 
-#song, #artist_name, #album, #uploader_name {
+#song, #artist_name, #album, #uploader_name, #mp3_text {
     margin:auto;
     display:table;
     font-family: monospace;
@@ -74,7 +74,7 @@ nav {
     display: flex;
 }
 
-button.update, button.delete, input.upload, button.select {
+button.update, button.delete, input.upload, button.select, #submit_info {
     margin: auto;
     font-family: monospace;
     align-items: center;

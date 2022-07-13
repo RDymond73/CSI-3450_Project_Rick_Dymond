@@ -40,8 +40,6 @@
 			<p id="caption"> Upload an audio file and play your favorite music!  </p>
 
 			<!--This is an audio player for the mp3 files-->
-            <form action="/insert_table" method="POST" enctype="multipart/form-data">
-
               <% if (player!="") { %>
 				<%source%>
 
@@ -56,18 +54,23 @@
 			<br>
 
 			<!-- This is a file uploader for MP3s -->
-				<input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>
+			<form action="/insert_table" method="POST" enctype="multipart/form-data">
+			    <input type="file" id="file_input" accept="audio/*" required name="mp3_file"/> 
 				<br>
                 <input class ="upload" type="submit" value="Upload">
+			</form>
 			<br>
 
 			<!-- field for adding database info  -->
+			<form action="/insert_table?" method="get">
 			<input type="text" name="song" id="song" width="100px" required placeholder="Song title">
 			<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
 			<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
 			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
-			<br>
+			<input type="text" name="mp3_text" id="mp3_text" width="100px" required placeholder="MP3">
+			<button id="submit_info" onclick="location.href='/insert_table?'">Submit Info</button>
             </form>
+			<br>
 		</section>
 
 		<!-- section for database table display -->

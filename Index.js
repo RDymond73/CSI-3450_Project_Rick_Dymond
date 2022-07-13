@@ -5,8 +5,9 @@ const mysql = require("mysql");
 const env = require('dotenv');
 const cors = require('cors');
 const fs = require('fs');
+const AWS = require('aws-sdk');
 //const session = require("express-session");
-const fileUpload = require('express-fileUpload');
+//const fileUpload = require('express-fileUpload');
 const express = require('express');
 const { userInfo } = require("os");
 const { response } = require("express");
@@ -17,8 +18,15 @@ const { writer } = require("repl");
 const { resolve } = require("path");
 const { request } = require("http");
 const app = express();
+const S3_BUCKET = 'csi3450-project-rick-dymondInfo';
 let instance = null;
 env.config();
+AWS.config = new AWS.Config();
+AWS.config.accessKeyId = "AKIA3SJWYFGDN4F5T3BJ";
+AWS.config.secretAccessKey = "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";
+AWS.config.region = "us-east-1";
+//heroku config:set AWS_ACCESS_KEY_ID=AKIA3SJWYFGDHDGLKXBI AWS_SECRET_ACCESS_KEY=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
+//heroku config:set S3_BUCKET_NAME=csi3450-project-rick-dymond
 
 //connect web app to local database
 // const database = mysql.createConnection({
@@ -62,6 +70,27 @@ module.exports = database;
 //   console.log('Connected to Database');
 // });
 
+const uploadFile = (fileName) => {
+  // Read content from the file
+  const fileContent = fs.readFileSync(fileName);
+
+  // Setting up S3 upload parameters
+  const params = {
+      Bucket: BUCKET_NAME,
+      Key: fileName.name, // File name you want to save as in S3
+      Body: fileContent
+  };
+
+  // Uploading files to the bucket
+  s3.upload(params, function(err, data) {
+      if (err) {
+          throw err;
+      }
+      console.log(`File uploaded successfully. ${data.Location}`);
+  });
+};
+
+
 //middleware & routers
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -69,7 +98,9 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 
-app.use(fileUpload());
+app.use(cors());
+
+//app.use(fileUpload());
 
 //app.use(upload());
 
@@ -78,7 +109,9 @@ app.use(express.urlencoded({
   SameSite: 'none'
 }));
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://s3.amazonaws.com'
+}));
 //.sccs
 //app.use(fileUpload());
 
@@ -166,37 +199,36 @@ app.get('/create_table', (req, res) => {
 
   //database querys
   //insert row into music_table
-  app.all('/insert_table', (request, response) => {
-    
-    let song =  request.body.song;
-    let album = request.body.album;
-    let artist = request.body.artist_name;
-    let uploader = request.body.uploader_name;
-    let mp3_file = request.files.mp3_file;
+  app.get('/insert_table', (request, response) => {
+    let song =  request.query.song;
+    let album = request.query.album;
+    let artist = request.query.artist_name;
+    let uploader = request.query.uploader_name;
+    let mp3_file = request.query.mp3_text;
     console.log(song);
     console.log(album);
     console.log(artist);
     console.log(uploader);
     console.log(mp3_file);
-    let sql = "INSERT INTO `music_table`(`id`, `song`, `album`, `artist`, `uploader`, `mp3` ) VALUES (NULL, " + "'" + song + " ', " + "'" + album + "', '" + artist + "' , " + "'" + uploader + "', '" + JSON.stringify(mp3_file.name) + "');";
+    let sql = "INSERT INTO `music_table`(`id`, `song`, `album`, `artist`, `uploader`, `mp3` ) VALUES (NULL, " + "'" + song + " ', " + "'" + album + "', '" + artist + "' , " + "'" + uploader + "', '" + mp3_file + "');";
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
-      mp3_file.mv("public/audio/" + mp3_file.name, function(error) {
-        if (error) {
-          console.log('error moving audio file');
-        } else {
-          console.log('audio file moved');
-        } 
-      });
     });
-    mp3_file.mv("/public/audio/" + mp3_file.name, function(error) {
-      if (error) {
-        console.log('error moving audio file');
-      } else {
-        console.log('audio file moved');
-      } 
-    });
+    response.redirect('/home');
+    console.log('Insert Query Successful');
+  });
+
+  app.post('/insert_table', (request, response) => {
+    let mp3_file = request.mp3_file;
+    console.log(mp3_file);
+    // mp3_file.mv("/public/audio/" + mp3_file.name, function(error) {
+    //   if (error) {
+    //     console.log('error moving audio file');
+    //   } else {
+    //     console.log('audio file moved');
+    //   } 
+    // });
     response.redirect('/home');
     console.log('Insert Query Successful');
   });
@@ -286,6 +318,32 @@ app.get('/create_table', (req, res) => {
     fs.unlinkSync('./public/audio/' + mp3_string);
     res.redirect('/home');
     console.log('Row Deleted');
+  });
+
+  app.get('/sign-s3', (req, res) => {
+    const s3 = new AWS.S3();
+    const fileName = req.query['file-name'];
+    const fileType = req.query['file-type'];
+    const s3Params = {
+      Bucket: S3_BUCKET,
+      Key: fileName,
+      Expires: 60,
+      ContentType: fileType,
+      ACL: 'public-read'
+    };
+  
+    s3.getSignedUrl('putObject', s3Params, (err, data) => {
+      if(err){
+        console.log(err);
+        return res.end();
+      }
+      const returnData = {
+        signedRequest: data,
+        url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      };
+      res.write(JSON.stringify(returnData));
+      res.end();
+    });
   });
 
 //port for application listening

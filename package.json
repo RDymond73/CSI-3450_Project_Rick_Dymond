@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/RDymond73/CSI-3450_Project_Rick_Dymond#readme",
   "dependencies": {
+    "aws-sdk": "^2.1173.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
