@@ -54,12 +54,12 @@ const database = mysql.createPool({
 module.exports = database;
 //testttttt
 //database connection function
-database.connect(function(err) {
-  if(err) {
-    console.log('Error no connection to database');
-  }
-  console.log('Connected to Database');
-});
+// database.connect(function(err) {
+//   if(err) {
+//     console.log('Error no connection to database');
+//   }
+//   console.log('Connected to Database');
+// });
 
 //middleware & routers
 app.use(express.static(path.join(__dirname, "public")));
