@@ -31,11 +31,18 @@ env.config();
 // });
 
 //connect web app to heroku database
+// const database = mysql.createConnection({
+//   host: 'us-cdbr-east-06.cleardb.net',
+//   user: 'b5bb56fadceead',
+//   password: '781ab838',
+//   database: 'heroku_2baab068f103003',
+// });
+
 const database = mysql.createConnection({
   host: 'us-cdbr-east-06.cleardb.net',
-  user: 'b5bb56fadceead',
-  password: '781ab838',
-  database: 'heroku_2baab068f103003',
+  user: 'b34baee7060ef1',
+  password: '9c1c3768',
+  database: 'heroku_fb937940a238b9a',
 });
 //test
 //database connection function
