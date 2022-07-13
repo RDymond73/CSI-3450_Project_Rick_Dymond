@@ -110,7 +110,7 @@ app.use(express.urlencoded({
 }));
 
 app.use(cors({
-  origin: 'https://s3.console.aws.amazon.com'
+  origin: 'https://test222222222godhelpme.herokuapp.com' 
 }));
 //.sccs
 //app.use(fileUpload());
