@@ -110,7 +110,7 @@ app.use(express.urlencoded({
 }));
 
 app.use(cors({
-  origin: '*'
+  origin: 'https://s3.console.aws.amazon.com'
 }));
 //.sccs
 //app.use(fileUpload());
