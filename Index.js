@@ -44,7 +44,7 @@ const database = mysql.createConnection({
   password: '9c1c3768',
   database: 'heroku_fb937940a238b9a',
 });
-//test
+//testttttt
 //database connection function
 database.connect(function(err) {
   if(err) {
@@ -153,8 +153,8 @@ app.get('/create_table', (req, res) => {
     console.log('Table Deleted');
   });
 
-  database querys
-  insert row into music_table
+  //database querys
+  //insert row into music_table
   app.post('/insert_table', (request, response) => {
     
     let song =  request.body.song;
