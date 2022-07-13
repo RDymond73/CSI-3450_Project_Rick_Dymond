@@ -348,12 +348,12 @@ app.get('/create_table', (req, res) => {
   });
 
   app.use((req, res,) => {
-    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Origin", "https://s3.console.aws.amazon.com")
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested, Content-Type, Accept Authorization"
     )
-    if (req.method === "POST") {
+    if (req.method === "OPTIONS") {
       res.header(
         "Access-Control-Allow-Methods",
         "POST, PUT, PATCH, GET, DELETE"
