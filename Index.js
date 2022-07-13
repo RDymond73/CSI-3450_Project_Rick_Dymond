@@ -21,23 +21,22 @@ let instance = null;
 env.config();
 
 //database connection object
-// const database = mysql.createConnection({
-//       //database
-//       host: 'localhost',
-//       user: 'root',
-//       password: '',
-//       database: 'music_db',
-//       multipleStatments: true
-// });
-
 const database = mysql.createConnection({
-  //database
-  host: 'us-cdbr-east-06.cleardb.net',
-  user: 'b5bb56fadceead',
-  password: '781ab838',
-  database: 'heroku_2baab068f103003',
-  multipleStatments: true
+      //database
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'music_db',
+      multipleStatments: true
 });
+
+// const database = mysql.createConnection({
+//   //database
+//   host: 'us-cdbr-east-06.cleardb.net',
+//   user: 'b5bb56fadceead',
+//   password: '781ab838',
+//   database: 'heroku_2baab068f103003',
+// });
 
 //database connection function
 database.connect(function(err) {
@@ -120,7 +119,6 @@ app.use(fileUpload());
 
 //create db for admin
 app.get('/create_db', (req, res) => {
-  let databaseName = 'music_db';
    sql = 'CREATE DATABASE music_db';
    database.query(sql, (err, result) => {
    if(err) throw err;
