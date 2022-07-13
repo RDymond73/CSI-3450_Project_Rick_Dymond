@@ -6,6 +6,7 @@ const env = require('dotenv');
 const cors = require('cors');
 const fs = require('fs');
 //const session = require("express-session");
+const fileUpload = require('express-fileUpload');
 const express = require('express');
 const { userInfo } = require("os");
 const { response } = require("express");
@@ -68,6 +69,10 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 
+app.use(fileUpload());
+
+//app.use(upload());
+
 app.use(express.urlencoded({ 
   extended: true, 
   SameSite: 'none'
@@ -89,22 +94,20 @@ app.all("/", (req, res) => {
   console.log('Upload Reponse Successful');
   });
 
-app.post('/insert_table', function(req, res){
-  let mp3_data = req.body;
-  let mp3_file = req.files.mp3_file;
-
-  mp3_file.mv('./audio/' + mp3_file.name, function (error) {
-    if(error) {
-    console.log('MP3 Upload not succesful');
-    console.log(error);
-  }else{
-    console.log('MP3 Upload Succesful');
-  }
-  console.log(mp3_file);
-  });
-
-  res.redirect('/home');
-});
+// app.post('/insert_table', function(req, res){
+//   let mp3_data = req.body;
+//   let mp3_file = req.files.mp3_file;
+//   mp3_file.mv('./audio/' + mp3_file.name, function (error) {
+//     if(error) {
+//     console.log('MP3 Upload not succesful');
+//     console.log(error);
+//   }else{
+//     console.log('MP3 Upload Succesful');
+//   }
+//   console.log(mp3_file);
+//   });
+//   res.redirect('/home');
+// });
 
 //create db for admin
 app.get('/create_db', (req, res) => {
@@ -163,7 +166,7 @@ app.get('/create_table', (req, res) => {
 
   //database querys
   //insert row into music_table
-  app.post('/insert_table', (request, response) => {
+  app.all('/insert_table', (request, response) => {
     
     let song =  request.body.song;
     let album = request.body.album;
@@ -257,17 +260,17 @@ app.get('/create_table', (req, res) => {
     });
   });
 
-  app.all('/home', (req, res) => {
-    console.log(req.query);
-    console.log(res.query);
-    let sql = 'SELECT * FROM mp3_table ORDER BY id';
-    database.query(sql, (err, data) => {
-      if (err) throw err;
-      console.log(data);
-      res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index:data});
-    });
+  // app.all('/home', (req, res) => {
+  //   console.log(req.query);
+  //   console.log(res.query);
+  //   let sql = 'SELECT * FROM mp3_table ORDER BY id';
+  //   database.query(sql, (err, data) => {
+  //     if (err) throw err;
+  //     console.log(data);
+  //     res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index:data});
+  //   });
 
-  });
+  // });
 
   //drop row
   app.all('/drop_row', (req, res) => {

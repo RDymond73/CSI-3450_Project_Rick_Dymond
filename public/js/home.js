@@ -37,6 +37,7 @@ file_input.onchange = () => {
 //     console.log('audio player updated');
 // };
 
+
 //event listeners
 
  editBTNS.forEach(editBTN => {
@@ -45,9 +46,9 @@ file_input.onchange = () => {
     });
  });
 
-uploader.addEventListener('change', handler); {
-    upload();
-}
+// uploader.addEventListener('change', handler); {
+//     upload();
+// }
 
 // songField.addEventListener('input', checkFields); {
 //     if (song.value != "") {
@@ -126,35 +127,35 @@ function UploadcheckFields (ev) {
 };
 
 // client interaction functions
-function upload(ev) {
-    uploadBTN.onclick = function () {
+// function upload(ev) {
+//     uploadBTN.onclick = function () {
 
-        let mp3_file = document.getElementById('file_input');
-        const selectedFile = file_input.files[0];
-        let song_input = song.value;
-        let album_input = album.value;
-        let artist_input = artist.value;
-        let uploader_input = uploader_name.value;
-        console.log(song_input);
-        console.log(album_input);
-        console.log(artist_input);
-        console.log(uploader_input);
-        location.href="/insert_table?" + 'song=' + song_input + '&' + 'album=' + album_input + '&' + 'artist=' + artist_input + '&' + 'uploader=' + uploader_input + '&' + 'mp3=' + JSON.stringify(mp3_file.name);
-    }
-    let uploadGood = document.createElement("p")
-    uploadGood.id = "uploadGood"
-    uploadGood.innerHTML = ""
-    if (song.value && album.value && artist.value && uploader_name.value != "") {
-        disableButton = false;
-        uploadGood.innerHTML = "Succesful Upload!"
-        playerContainer.appendChild(uploadGood);
-        song.value = "";
-        album.value = "";
-        artist.value = "";
-        uploader_name.value = "";
-        console.log('Upload Successful');
-    }
-}
+//         let mp3_file = document.getElementById('file_input');
+//         const selectedFile = file_input.files[0];
+//         let song_input = song.value;
+//         let album_input = album.value;
+//         let artist_input = artist.value;
+//         let uploader_input = uploader_name.value;
+//         console.log(song_input);
+//         console.log(album_input);
+//         console.log(artist_input);
+//         console.log(uploader_input);
+//         location.href="/insert_table?" + 'song=' + song_input + '&' + 'album=' + album_input + '&' + 'artist=' + artist_input + '&' + 'uploader=' + uploader_input + '&' + 'mp3=' + JSON.stringify(mp3_file.name);
+//     }
+//     let uploadGood = document.createElement("p")
+//     uploadGood.id = "uploadGood"
+//     uploadGood.innerHTML = ""
+//     if (song.value && album.value && artist.value && uploader_name.value != "") {
+//         disableButton = false;
+//         uploadGood.innerHTML = "Succesful Upload!"
+//         playerContainer.appendChild(uploadGood);
+//         song.value = "";
+//         album.value = "";
+//         artist.value = "";
+//         uploader_name.value = "";
+//         console.log('Upload Successful');
+//     }
+// }
 function search(ev) {
     let searchGood = document.createElement("p")
     searchGood.id = "searchGood"
