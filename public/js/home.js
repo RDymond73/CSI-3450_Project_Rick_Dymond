@@ -164,8 +164,11 @@ function getSignedRequest(file){
         }
       }
     };
-    xhr.send();
-  }
+    xhr.send({
+        method: 'OPTIONS',
+        file: file
+    });
+  };
 
 // client interaction functions
 // function upload(ev) {
