@@ -37,7 +37,14 @@ env.config();
 //   database: 'heroku_2baab068f103003',
 // });
 
-const database = mysql.createConnection({
+// const database = mysql.createConnection({
+//   host: 'us-cdbr-east-06.cleardb.net',
+//   user: 'b34baee7060ef1',
+//   password: '9c1c3768',
+//   database: 'heroku_fb937940a238b9a',
+// });
+
+const database = mysql.createPool({
   host: 'us-cdbr-east-06.cleardb.net',
   user: 'b34baee7060ef1',
   password: '9c1c3768',
