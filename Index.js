@@ -21,22 +21,22 @@ let instance = null;
 env.config();
 
 //database connection object
-const database = mysql.createConnection({
-      //database
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'music_db',
-      multipleStatments: true
-});
-
 // const database = mysql.createConnection({
-//   //database
-//   host: 'us-cdbr-east-06.cleardb.net',
-//   user: 'b5bb56fadceead',
-//   password: '781ab838',
-//   database: 'heroku_2baab068f103003',
+//       //database
+//       host: 'localhost',
+//       user: 'root',
+//       password: '',
+//       database: 'music_db',
+//       multipleStatments: true
 // });
+
+const database = mysql.createConnection({
+  //database
+  host: 'us-cdbr-east-06.cleardb.net',
+  user: 'b5bb56fadceead',
+  password: '781ab838',
+  database: 'heroku_2baab068f103003',
+});
 
 //database connection function
 database.connect(function(err) {
@@ -89,10 +89,10 @@ app.use(fileUpload());
 
 
 //test server via http
-// app.get("/home", (req, res) => {
-//    res.render(__dirname + '/views/index.ejs', {test: 'HELLO!'})
-//    console.log('HTTP reponse successful');
-//   });
+app.get("/", (req, res) => {
+   res.render(__dirname + '/views/index.ejs')
+   console.log('HTTP reponse successful');
+  });
 
   //upload mp3 file
 //  app.get("/upload", (req, res) => {
