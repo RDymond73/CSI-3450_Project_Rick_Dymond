@@ -52,7 +52,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set('view engine', 'ejs');
 
 app.use(express.json());
-
+S
 app.use(express.urlencoded({ 
   extended: true, 
   SameSite: 'none'
@@ -64,7 +64,7 @@ app.use(fileUpload());
 
 //test server via http
 app.get("/", (req, res) => {
-   res.render(__dirname + '/views/index.ejs')
+   res.render(__dirname + '/public/html/index.html')
    console.log('HTTP reponse successful');
   });
 
