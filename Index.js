@@ -43,6 +43,8 @@ const database = mysql.createConnection({
   password: '9c1c3768',
   database: 'heroku_fb937940a238b9a',
 });
+
+module.exports = database;
 //testttttt
 //database connection function
 database.connect(function(err) {
