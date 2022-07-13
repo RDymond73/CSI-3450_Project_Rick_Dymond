@@ -66,7 +66,7 @@ app.use(express.urlencoded({
 
 app.use(cors());
 
-app.use(fileUpload());
+//app.use(fileUpload());
 
 //test server via http
 app.get("/", (req, res) => {
