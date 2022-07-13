@@ -69,8 +69,8 @@ app.use(cors());
 //app.use(fileUpload());
 
 //test server via http
-app.get("/", (req, res) => {
-   res.render(__dirname + '/public/html/index.html')
+app.all("/", (req, res) => {
+   res.render(__dirname + '/home')
    console.log('HTTP reponse successful');
   });
 
