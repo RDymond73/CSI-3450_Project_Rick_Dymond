@@ -64,27 +64,11 @@
                     <th>Update</th>
                 </thead>
 				<tbody>
-                                <tr>
-                                    <td><%= data.id %></td>
-                                    <td><%= data.song %></td>
-                                    <td><%= data.album %></td>
-                                    <td><%= data.artist %></td>
-                                    <td><%= data.uploader %></td>
-                                    <td><%= data.mp3 %></td>
-                                    <td><button id = 'selectRow' class="select" onclick="location.href='/select_row?id=' + '<%= data.id%>' + '&mp3=' +'<%= data.mp3 %>' + '&source=' +'<%=data.link%>'">Select</button></td>
-                                    <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>' + '&mp3=' + '<%= data.mp3%>'">Delete</button></td>
-                                    <td><button class="update" onclick="location.href='/update_row?id=' + '<%data.id%>'">Update</button></td>
-                                </tr>
-
-                     <tr>
+                 	<tr>
                         <td colspan="9">No Data Found</td>
-                     </tr>
-                     <%
-                    }
-                    %>
+                 	</tr>
 				</tbody>
 			</table>
-
 			<br>
 		</section>
 		
