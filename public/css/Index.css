@@ -49,14 +49,13 @@ nav {
     font-family: monospace;
     text-align: center;
     align-items: center;
-    display: table;
-    padding-left: 5.5%;
+    display: block;
 }
 
 /* styling for text fields */
 #song, #artist_name, #album, #uploader_name, #mp3_text {
     margin:auto;
-    display:table;
+    display:inline-block;
     font-family: monospace;
     text-align: center;
 }
@@ -93,16 +92,8 @@ button.update, button.delete, input.upload, button.select, #submit_info {
     display: flex;
 }
 
-/* styling for successful functions */
-#uploadGood, #searchGood, #updateGood, #delGood{
-    margin: auto;
-    display: table;
-    font-family: monospace;
-    text-align: center;
-}
-
 /* table styling */
-    table, td, th, tr{
+table, td, th, tr{
     margin: auto;
     font-family: monospace;
     align-items: center;
@@ -114,7 +105,7 @@ button.update, button.delete, input.upload, button.select, #submit_info {
     text-align: center;
     border-style: solid;
 } 
-    th {
+th {
     margin: auto;
     font-family: monospace;
     align-items: center;
@@ -126,6 +117,18 @@ button.update, button.delete, input.upload, button.select, #submit_info {
     text-align: center;
     border-style: solid;
 }
+
+/* style for upload container */
+#upload_container {
+    display: inline;
+}
+
+#upload_section {
+    margin: auto;
+    align-items: center;
+    text-align: center;
+}
+
 /* style for info */
 #info {
     font-family: monospace;
