@@ -1,6 +1,6 @@
 
 //variables
-let uploader = document.getElementById('file_input');
+let uploader = document.getElementById('file_input').value;
 let song = document.getElementById('song');
 let album = document.getElementById('album');
 let artist = document.getElementById('artist_name');
