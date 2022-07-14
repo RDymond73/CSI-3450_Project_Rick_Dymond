@@ -39,12 +39,44 @@ AWS.config.region = "us-east-1";
 // });
 
 //connect web app to heroku database
-const database = mysql.createConnection({
+const database = mysql.createPool({
   host: 'us-cdbr-east-06.cleardb.net',
   user: 'b5bb56fadceead',
   password: '781ab838',
   database: 'heroku_2baab068f103003',
 });
+
+module.exports = database;
+
+var db_config = {
+  host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'example'
+};
+
+var connection;
+
+function handleDisconnect() {
+  connection = mysql.createConnection(db_config);
+
+  connection.connect(function(err) {
+    if(err) {
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+  });
+  connection.on('error', function(err) {
+    console.log('db error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+      handleDisconnect();
+    }
+  });
+}
+
 
 //module.exports = database;
 //database connection function
@@ -82,11 +114,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set('view engine', 'ejs');
 
 app.use(express.json());
-
-//app.use(fileUpload());
-
-//app.use(upload());
-
 
 app.use(express.urlencoded({ 
   extended: true, 
