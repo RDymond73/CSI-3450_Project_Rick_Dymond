@@ -1,5 +1,5 @@
 
-//variables
+//variables from document
 let uploader = document.getElementById('simple-file-upload');
 let song = document.getElementById('song');
 let album = document.getElementById('album');
@@ -19,103 +19,33 @@ let mp3_text = document.getElementById('mp3_text');
 let audio_player = document.getElementById('audio_player');
 let updateRowBTN = document.getElementsByClassName('update');
 let editBTNS = document.querySelectorAll('.editBTN');
-let simplefileupload = document.getElementById('');
+let simplefileupload = document.getElementById('simple-file-upload');
 
+//log file name in console
 const handler = () => {
     const selectedFiles = [...file_input.files];
     console.log(file_input);
-  }
+  };
 
-  // uploader.addEventListener("fileUploadSuccess", function (e) {
-  //   alert('file upload successful!');
-  // });
-
+//listen for change in 2nd file field 
 file_input.onchange = () => {
     let sourceTag = 'source';
     const selectedFile = file_input.files[0];
     console.log(selectedFile);
     mp3_text.value = selectedFile.name;
     mp3_text.setAttribute('size', mp3_text.length);
-    loadPlayer = document.getElementById('audio_player');
-    mp3_src = document.getElementById('source');
-    mp3_src.setAttribute('src', './audio/' + selectedFile.name);
+    // getSignedRequest(selectedFile); //for using s3 *not using anymore
+  };
 
-        if(selectedFile == null){
-          return alert('No file selected.');
-        }
-       // getSignedRequest(selectedFile);
-      };
-
-// uploadBTN.onclick = function() {
-//     let mp3_file = file_input.files[0];
-//     audio_player.load();
-//     setTimeout(function () {console.log('audio src:', audio_player.currentSrc)});
-//     console.log('audio player updated');
-// };
-
-
-//event listeners
-
+//event listeners//
+//function for edit button
  editBTNS.forEach(editBTN => {
     editBTN.addEventListener('click', function handleClick(ev) {
         console.log('Edit Button Clicked', ev);
     });
  });
 
-// uploader.addEventListener('change', handler); {
-//     upload();
-// }
-
-// songField.addEventListener('input', checkFields); {
-//     if (song.value != "") {
-//     checkFields(song);
-//     UploadcheckFields(song);
-//     }
-// }
-
-// songField.addEventListener('input', UploadcheckFields); {
-//     if (song.value != "") {
-//     UploadcheckFields(song);
-//     }
-// }
-
-// artistField.addEventListener('input', checkFields); {
-//     if (artist.value != "") {
-//     checkFields(artist);
-//     }
-// }
-
-// artistField.addEventListener('input', UploadcheckFields); {
-//     if (song.value != "") {
-//     UploadcheckFields(artist);
-//     }
-// }
-
-// albumField.addEventListener('input', checkFields); {
-//     if (album.value != "") {
-//     checkFields(album);
-//     }
-// }
-
-// albumField.addEventListener('input', UploadcheckFields); {
-//     if (album.value != "") {
-//     UploadcheckFields(album);
-//     }
-// }
-
-uploaderField.addEventListener('input', checkFields); {
-    if (uploader_name.value != "") {
-    checkFields(uploader_name);
-    UploadcheckFields(uploader_name);
-    }
-}
-
-uploaderField.addEventListener('input', UploadcheckFields); {
-    if (uploader_name.value != "") {
-    UploadcheckFields(uploader_name);
-    }
-}
-
+ //listen for file upload success 
 uploader.addEventListener("fileUploadSuccess", function (e) {
    link.value = this.value;
   alert('file upload successful!')
@@ -123,32 +53,8 @@ uploader.addEventListener("fileUploadSuccess", function (e) {
    console.log(uploader.name);
 });
 
-//check text fields
-function checkFields (ev) {
-    this.song;
-    this.album;
-    this.artist;
-    this.uploader_name;
-    if (song.value && album.value && artist.value && uploader_name.value != "") {
-        searchBTN.disabled = false;
-        updateBTN.disabled = false;
-        deleteBTN.disabled = false;
-        console.log('Buttons enabled');
-    }
-};
-
-function UploadcheckFields (ev) {
-    this.song;
-    this.album;
-    this.artist;
-    this.uploader_name;
-    this.file;
-    if (song.value && album.value && artist.value && uploader_name.value && file_input.onchange(true) != "") {
-        uploadBTN.disabled = false;
-        console.log('Upload Button enabled');
-    }
-};
-
+//functions//
+//upload file to s3 *not using anymore
 function uploadFile(file, signedRequest, url){
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', signedRequest);
@@ -167,6 +73,7 @@ function uploadFile(file, signedRequest, url){
     xhr.send(file);
   };
 
+//get request aignature from s3 *not using anymore
 function getSignedRequest(file){
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `/sign-s3?file-name=${encodeURIComponent(file.name)}&file-type=${file.type}`);
@@ -185,80 +92,3 @@ function getSignedRequest(file){
     };
     xhr.send()
   };
-
-// client interaction functions
-// function upload(ev) {
-//     uploadBTN.onclick = function () {
-
-//         let mp3_file = document.getElementById('file_input');
-//         const selectedFile = file_input.files[0];
-//         let song_input = song.value;
-//         let album_input = album.value;
-//         let artist_input = artist.value;
-//         let uploader_input = uploader_name.value;
-//         console.log(song_input);
-//         console.log(album_input);
-//         console.log(artist_input);
-//         console.log(uploader_input);
-//         location.href="/insert_table?" + 'song=' + song_input + '&' + 'album=' + album_input + '&' + 'artist=' + artist_input + '&' + 'uploader=' + uploader_input + '&' + 'mp3=' + JSON.stringify(mp3_file.name);
-//     }
-//     let uploadGood = document.createElement("p")
-//     uploadGood.id = "uploadGood"
-//     uploadGood.innerHTML = ""
-//     if (song.value && album.value && artist.value && uploader_name.value != "") {
-//         disableButton = false;
-//         uploadGood.innerHTML = "Succesful Upload!"
-//         playerContainer.appendChild(uploadGood);
-//         song.value = "";
-//         album.value = "";
-//         artist.value = "";
-//         uploader_name.value = "";
-//         console.log('Upload Successful');
-//     }
-// }
-function search(ev) {
-    let searchGood = document.createElement("p")
-    searchGood.id = "searchGood"
-    searchGood.innerHTML = ""
-        if (song.value || album.value || artist.value || uploader_name.value != "") {
-           // location.reload();
-            disableButton = false;
-            searchGood.innerHTML = "Succesful Search!"
-            playerContainer.appendChild(searchGood);
-            song.value = "";
-            album.value = "";
-            artist.value = "";
-            uploader_name.value = "";
-            console.log('Search Succesful');
-    }
-}
-function update(ev) {
-    let updateGood = document.createElement("p")
-    updateGood.id = "updateGood"
-    updateGood.innerHTML = ""
-    
-    if (song.value && album.value && artist.value && uploader_name.value != "") {
-    updateGood.innerHTML = "Succesful Update!"
-    playerContainer.appendChild(updateGood);
-    song.value = "";
-    album.value = "";
-    artist.value = "";
-    uploader_name.value = "";
-    console.log('Update Succesful');
-    }
-}
-function del(ev) {
-    let delGood = document.createElement("p")
-    delGood.id = "delGood"
-    delGood.innerHTML = ""
-    
-    if (song.value && album.value && artist.value && uploader_name.value != "") {
-    delGood.innerHTML = "Succesful Deletion!"
-    playerContainer.appendChild(delGood);
-    song.value = "";
-    album.value = "";
-    artist.value = "";
-    uploader_name.value = "";
-    console.log('Delete Succesful');
-    }
-}

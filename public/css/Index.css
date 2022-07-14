@@ -42,6 +42,7 @@ nav {
     display: table;
 } 
 
+/* styling for file inputs */
 #file_input, #file_container {
     margin: auto;
     display: table;
@@ -52,6 +53,7 @@ nav {
     padding-left: 5.5%;
 }
 
+/* styling for text fields */
 #song, #artist_name, #album, #uploader_name, #mp3_text {
     margin:auto;
     display:table;
@@ -59,6 +61,7 @@ nav {
     text-align: center;
 }
 
+/* styling for hidden link text field */
 #link {
     display: none;
 }
@@ -80,7 +83,7 @@ nav {
     text-align: center;
     display: flex;
 }
-
+/* styling for buttons */
 button.update, button.delete, input.upload, button.select, #submit_info {
     margin: auto;
     font-family: monospace;
@@ -99,31 +102,6 @@ button.update, button.delete, input.upload, button.select, #submit_info {
 }
 
 /* table styling */
-    /*table, td, tr, td, tbody{
-    margin: auto;
-    font-family: monospace;
-    align-items: center;
-    justify-content: center;
-    border-collapse: collapse;
-    border: 1px solid black;
-    background-color: lightcyan;
-    padding: auto;
-    text-align: center;
-    border-style: solid;
-} */
-/* table styling */
- /* th {
-    margin: auto;
-    font-family: monospace;
-    align-items: center;
-    justify-content: center;
-    border-collapse: collapse;
-    border: 1px solid black;
-    background-color: darkgray;
-    padding: auto;
-    text-align: center;
-    border-style: solid;
-}  */
     table, td, th, tr{
     margin: auto;
     font-family: monospace;

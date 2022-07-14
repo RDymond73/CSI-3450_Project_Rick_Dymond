@@ -125,7 +125,7 @@ app.use(cors({
 }));
 
 //test server via http
-app.all("/", (req, res) => {
+app.get("/", (req, res) => {
    res.render(__dirname + '/home')
    console.log('HTTP reponse successful');
   });
@@ -206,7 +206,7 @@ app.get('/create_table', (req, res) => {
     console.log('Table Deleted');
   });
 
-  //database querys
+  //database querys//
   //insert row into music_table
   app.get('/insert_table', (request, response) => {
     let song =  request.query.song;

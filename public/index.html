@@ -9,6 +9,7 @@
     <title>Rick's Music Database</title>
 	<link rel="shortcut icon" href="./images/music_gif.gif" type="image/x-icon">
     <link rel="stylesheet" href="css/Index.css">
+	<script src="https://app.simplefileupload.com/buckets/b93b3ad01840790a27eb67613525d9bb.js"></script>
 </head>
 
 <!-- this is the body of the document containing the page contents -->
@@ -40,32 +41,16 @@
 			<p id="caption"> Upload an audio file and play your favorite music!  </p>
 
 			<!--This is an audio player for the mp3 files-->
-            <form action="/insert_table" method="POST" enctype="multipart/form-data">
 
 			<audio controls id="audio_player" >
                   <source id="source" src="">
 			</audio>
-
 			<br>
-
-			<!-- This is a file uploader for MP3s -->
-				<input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>
-				<br>
-                <input class ="upload" type="submit" value="Upload">
-			<br>
-
-			<!-- field for adding database info  -->
-			<input type="text" name="song" id="song" width="100px" required placeholder="Song title">
-			<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
-			<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
-			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
-			<br>
-            </form>
 		</section>
 
 		<!-- section for database table display -->
 		<section id="table_container">
-            <h3 id="music_table_title">Music Table Data</h3>
+            <h3 id="music_table_title"></h3>
 			<table id="music_table">
 				<thead>
 					<th>ID</th>
@@ -79,11 +64,48 @@
                     <th>Update</th>
                 </thead>
 				<tbody>
+                                <tr>
+                                    <td><%= data.id %></td>
+                                    <td><%= data.song %></td>
+                                    <td><%= data.album %></td>
+                                    <td><%= data.artist %></td>
+                                    <td><%= data.uploader %></td>
+                                    <td><%= data.mp3 %></td>
+                                    <td><button id = 'selectRow' class="select" onclick="location.href='/select_row?id=' + '<%= data.id%>' + '&mp3=' +'<%= data.mp3 %>' + '&source=' +'<%=data.link%>'">Select</button></td>
+                                    <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>' + '&mp3=' + '<%= data.mp3%>'">Delete</button></td>
+                                    <td><button class="update" onclick="location.href='/update_row?id=' + '<%data.id%>'">Update</button></td>
+                                </tr>
+
                      <tr>
                         <td colspan="9">No Data Found</td>
                      </tr>
+                     <%
+                    }
+                    %>
 				</tbody>
 			</table>
+
+			<br>
+		</section>
+		
+		<!-- upload section -->
+		<section id="upload_section">
+						<!-- This is a file uploader for MP3s -->
+			<form action="/insert_table" method="POST" enctype="multipart/form-data" id="file_container">
+				<input type="hidden" data-accepted="audio/*" id="simple-file-upload" class="simple-file-upload" data-maxFileSize="5" required name="file_input" data-preview="false">
+				<input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>
+			</form>
+			<!-- field for adding database info  -->
+			<form action="/insert_table?" method="get">
+			<input type="text" name="song" id="song" widnoth="100px" required placeholder="Song title">
+			<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
+			<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
+			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
+			<input type="text" name="mp3_text" id="mp3_text" width="100px" required placeholder="MP3">
+			<button id="submit_info" onclick="location.href='/insert_table?'">Submit Info</button>
+			<input type="text" name="link" id="link" placeholder="Link">
+            </form>
+			<br>
 		</section>
 	</article>
 
