@@ -9,6 +9,7 @@ const AWS = require('aws-sdk');
 //const session = require("express-session");
 //const fileUpload = require('express-fileUpload');
 const express = require('express');
+const axios = require('axios');
 const { userInfo } = require("os");
 const { response } = require("express");
 const { strictEqual } = require("assert");
@@ -17,6 +18,8 @@ const { brotliDecompress } = require("zlib");
 const { writer } = require("repl");
 const { resolve } = require("path");
 const { request } = require("http");
+const { HttpRequest } = require("aws-sdk");
+const { send } = require("process");
 const app = express();
 const S3_BUCKET = 'csi3450-project-rick-dymondInfo';
 let instance = null;
@@ -25,8 +28,8 @@ AWS.config = new AWS.Config();
 AWS.config.accessKeyId = "AKIA3SJWYFGDN4F5T3BJ";
 AWS.config.secretAccessKey = "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";
 AWS.config.region = "us-east-1";
-//heroku config:set AWS_ACCESS_KEY_ID=AKIA3SJWYFGDHDGLKXBI AWS_SECRET_ACCESS_KEY=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
-//heroku config:set S3_BUCKET_NAME=csi3450-project-rick-dymond
+//heroku config:set AWS_ACCESS_KEY_ID=AKIA3SJWYFGDHDGLKXBI AWS_SECRET_ACCESS_KEY=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 *not using anymore
+//heroku config:set S3_BUCKET_NAME=csi3450-project-rick-dymond *not using anymore
 
 //connect web app to local database
 // const database = mysql.createConnection({
@@ -55,8 +58,8 @@ var db_config = {
     database: 'example'
 };
 
-var connection;
-
+//hanndle db disconnects
+let connection;
 function handleDisconnect() {
   connection = mysql.createConnection(db_config);
 
@@ -76,16 +79,6 @@ function handleDisconnect() {
     }
   });
 }
-
-
-//module.exports = database;
-//database connection function
-// database.connect(function(err) {
-//   if(err) {
-//     console.log('Error no connection to database');
-//   }
-//   console.log('Connected to Database');
-// });
 
 const uploadFile = (fileName) => {
   // Read content from the file
@@ -183,20 +176,8 @@ app.get('/create_table', (req, res) => {
     console.log('Table Created');
   });
 
-  app.get('/create_mp3table', (req, res) => {
-    let sql = 'CREATE TABLE mp3_table(id INT AUTO_INCREMENT PRIMARY KEY, mp3 BLOB)';
-    database.query(sql, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-    res.redirect('/home');
-    console.log('MP3 Table Created');
-  });
-
-
-
 //drop table from database for admin
-  app.get('/drop_table', (req, res) => {
+app.get('/drop_table', (req, res) => {
     let sql = 'DROP TABLE music_table';
     database.query(sql, (err, result) => {
       if (err) throw err;
@@ -208,7 +189,7 @@ app.get('/create_table', (req, res) => {
 
   //database querys//
   //insert row into music_table
-  app.get('/insert_table', (request, response) => {
+app.get('/insert_table', (request, response) => {
     let song =  request.query.song;
     let album = request.query.album;
     let artist = request.query.artist_name;
@@ -228,8 +209,7 @@ app.get('/create_table', (req, res) => {
     response.redirect('/home');
     console.log('Insert Query Successful');
   });
-
-  app.post('/insert_table', (request, response) => {
+app.post('/insert_table', (request, response) => {
     let mp3_file = request.mp3_file;
     console.log(mp3_file);
     // mp3_file.mv("/public/audio/" + mp3_file.name, function(error) {
@@ -243,7 +223,8 @@ app.get('/create_table', (req, res) => {
     console.log('Insert Query Successful');
   });
 
-  app.all('/update_row', (req, res) => {
+//update row
+app.all('/update_row', (req, res) => {
     let rowID = req.query.id;
     let song =  req.query.song;
     let album = req.query.album;
@@ -263,8 +244,8 @@ app.get('/create_table', (req, res) => {
     console.log('Row Deleted');
   });
 
-  //select row
-  app.get('/select_row', (request, response) => {
+//select row
+app.get('/select_row', (request, response) => {
     let rowID = request.query.id;
     let source = request.query.source;
     let mp3_file = request.query.mp3;
@@ -280,23 +261,9 @@ app.get('/create_table', (req, res) => {
       console.log('Select Query');
       });
     });
-    //https://cdn-rkm3fm3h.files-simplefileupload.com/static/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdkROIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--b2a7970d98567b0a116ecb12a097069704fdd553/One-Piece-at-a-Time-getmp3pro.mp3
-    //https://cdn-rkm3fm3h.files-simplefileupload.com/static/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdkhOIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--7da3c36d27de67ce45784970ac3e5e5624707ec4/Grateful%20Dead%20-%20Ripple%20(Official%20Music%20Video).mp3
 
-  //search
-  //https://cdn-xiqdw5vn.files-simplefileupload.com/static/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb2pPIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0e2f4cd3bf29e6784e14812508bd0a8ae6929245/One-Piece-at-a-Time-getmp3pro.mp3
-  app.all('/search_table', (request, response) => {
-    let sql = 'SELECT * FROM music_table';
-    database.query(sql, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-    response.redirect('/home');
-    console.log('Search Querry');
-  });
-
-  //Load table into index.ejs
-  app.all('/home', (req, res) => {
+//Load table into index.ejs
+app.all('/home', (req, res) => {
   let sql = 'SELECT * FROM music_table ORDER BY id';
   database.query(sql, (err, data) => {
     if (err) throw err;
@@ -305,35 +272,34 @@ app.get('/create_table', (req, res) => {
     });
   });
 
-  // app.all('/home', (req, res) => {
-  //   console.log(req.query);
-  //   console.log(res.query);
-  //   let sql = 'SELECT * FROM mp3_table ORDER BY id';
-  //   database.query(sql, (err, data) => {
-  //     if (err) throw err;
-  //     console.log(data);
-  //     res.render(__dirname + '/views/index.ejs', {title: 'Music Table Data' , action:'list', index:data});
-  //   });
-
-  // });
-
-  //drop row
-  app.all('/drop_row', (req, res) => {
+//drop row from table
+app.all('/drop_row', (req, res) => {
     let rowID = req.query.id;
     let mp3 = req.query.mp3;
-    let mp3_string = mp3.replace(/(^"|"$)/g, '');
+    let link = req.query.link;
     let sql = 'DELETE FROM music_table WHERE id=' + rowID;
     let databaseName = 'music_db';
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
     });
-    fs.unlinkSync('./public/audio/' + mp3_string);
-    res.redirect('/home');
+    axios.delete('https://app.simplefileupload.com/api/v1/file?url=' + link, {
+      auth: {
+        username: 'pb574627fb61bb20a5d0f69aa972be0ad',
+        password: 'sa2e110ef066b084c82e5b47c0ccaad16'
+      }
+    }).then(() => {
+      console.log('Delete file @ ' + link);
+      console.log('File Deleted');
+      res.redirect('/home');
+    }).catch((error) => {
+      console.log(error);
+    });
     console.log('Row Deleted');
   });
 
-  app.get('/sign-s3', (req, res) => {
+//get signature from s3
+app.get('/sign-s3', (req, res) => {
     const s3 = new AWS.S3();
     const fileName = req.query['file-name'];
     const fileType = req.query['file-type'];
@@ -359,8 +325,9 @@ app.get('/create_table', (req, res) => {
     });
   });
 
+  // api setup for s3
   // app.use((req, res,) => {
-  //   res.header("Access-Control-Allow-Origin", "https://localhost:3000");
+  //   res.header("Access-Control-Allow-Origin", "https://csi3450-project-rick-dymond.herokuapp.com/");
   //   res.header(
   //     "Access-Control-Allow-Headers",
   //     "Origin, X-Requested, Content-Type, Accept Authorization"
@@ -373,6 +340,7 @@ app.get('/create_table', (req, res) => {
   //     return res.status(200).json({})
   //   }
   // })
+
 //port for application listening
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

@@ -65,9 +65,10 @@
 					<th>ID</th>
 					<th>Song Name</th>
 					<th>Album Name</th>
-                    <th>Artist name</th>
+                    <th>Artist Name</th>
 					<th>Uploader Name</th>
-                    <th>MP3 file</th>
+                    <th>MP3 File</th>
+					<th hidden>Link to File</th>
                     <th>Select</th>
                     <th>Delete</th>
                     <th>Update</th>
@@ -77,7 +78,7 @@
                         {
                             index.forEach(function(data) {
                             %>
-							<% index.source %>
+							<% index.source %>	
                                 <tr>
                                     <td><%= data.id %></td>
                                     <td><%= data.song %></td>
@@ -85,8 +86,9 @@
                                     <td><%= data.artist %></td>
                                     <td><%= data.uploader %></td>
                                     <td><%= data.mp3 %></td>
+									<td hidden><%= data.link %></td>
                                     <td><button id = 'selectRow' class="select" onclick="location.href='/select_row?id=' + '<%= data.id%>' + '&mp3=' +'<%= data.mp3 %>' + '&source=' +'<%=data.link%>'">Select</button></td>
-                                    <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>' + '&mp3=' + '<%= data.mp3%>'">Delete</button></td>
+                                    <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>' + '&mp3=' + '<%= data.mp3%>' + '&link=' + '<%= data.link %>'">Delete</button></td>
                                     <td><button class="update" onclick="location.href='/update_row?id=' + '<%data.id%>'">Update</button></td>
                                 </tr>
                         <%
