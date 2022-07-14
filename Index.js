@@ -39,29 +39,14 @@ AWS.config.region = "us-east-1";
 // });
 
 //connect web app to heroku database
-// const database = mysql.createConnection({
-//   host: 'us-cdbr-east-06.cleardb.net',
-//   user: 'b5bb56fadceead',
-//   password: '781ab838',
-//   database: 'heroku_2baab068f103003',
-// });
-
-// const database = mysql.createConnection({
-//   host: 'us-cdbr-east-06.cleardb.net',
-//   user: 'b34baee7060ef1',
-//   password: '9c1c3768',
-//   database: 'heroku_fb937940a238b9a',
-// });
-
-const database = mysql.createPool({
+const database = mysql.createConnection({
   host: 'us-cdbr-east-06.cleardb.net',
-  user: 'b34baee7060ef1',
-  password: '9c1c3768',
-  database: 'heroku_fb937940a238b9a',
+  user: 'b5bb56fadceead',
+  password: '781ab838',
+  database: 'heroku_2baab068f103003',
 });
 
-module.exports = database;
-//testttttt
+//module.exports = database;
 //database connection function
 // database.connect(function(err) {
 //   if(err) {
@@ -162,7 +147,7 @@ app.get('/drop_db', (req, res) => {
 
 //create table for admin
 app.get('/create_table', (req, res) => {
-    let sql = 'CREATE TABLE music_table(id INT AUTO_INCREMENT PRIMARY KEY, song VARCHAR(255), album VARCHAR(255), artist VARCHAR(255), uploader VARCHAR(255), mp3 VARCHAR(255))';
+    let sql = 'CREATE TABLE music_table(id INT AUTO_INCREMENT PRIMARY KEY, song VARCHAR(255), album VARCHAR(255), artist VARCHAR(255), uploader VARCHAR(255), mp3 VARCHAR(255), link VARCHAR(255))';
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -202,12 +187,13 @@ app.get('/create_table', (req, res) => {
     let artist = request.query.artist_name;
     let uploader = request.query.uploader_name;
     let mp3_file = request.query.mp3_text;
+    let link = request.query.link;
     console.log(song);
     console.log(album);
     console.log(artist);
     console.log(uploader);
     console.log(mp3_file);
-    let sql = "INSERT INTO `music_table`(`id`, `song`, `album`, `artist`, `uploader`, `mp3` ) VALUES (NULL, " + "'" + song + " ', " + "'" + album + "', '" + artist + "' , " + "'" + uploader + "', '" + mp3_file + "');";
+    let sql = "INSERT INTO `music_table`(`id`, `song`, `album`, `artist`, `uploader`, `mp3`, `link`) VALUES (NULL, " + "'" + song + " ', " + "'" + album + "', '" + artist + "' , " + "'" + uploader + "', '" + mp3_file + "', '" + link + "');";
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -255,14 +241,15 @@ app.get('/create_table', (req, res) => {
     let rowID = request.query.id;
     let source = request.query.source;
     let mp3_file = request.query.mp3;
-    let source_string = '/audio/' + mp3_file.replace(/(^"|"$)/g, '');
+    let link = request.query.source;
+    //let source_string = '/audio/' + mp3_file.replace(/(^"|"$)/g, '');
     let sql = 'SELECT * FROM music_table WHERE id=' +rowID;
-    console.log(source);
-    console.log(source_string);
+    //console.log(source);
+    console.log(link);
     database.query(sql, (err, data) => {
       if (err) throw err;
       console.log('Row Selected');
-      response.render(__dirname + '/views/index.ejs', {title: 'Selected Track' , action:'list', index: data, player: 'update', source: source_string});
+      response.render(__dirname + '/views/index.ejs', {title: 'Selected Track' , action:'list', index: data, player: 'update', source: link});
       console.log('Select Query');
       });
     });
@@ -270,6 +257,7 @@ app.get('/create_table', (req, res) => {
     //https://cdn-rkm3fm3h.files-simplefileupload.com/static/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdkhOIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--7da3c36d27de67ce45784970ac3e5e5624707ec4/Grateful%20Dead%20-%20Ripple%20(Official%20Music%20Video).mp3
 
   //search
+  //https://cdn-xiqdw5vn.files-simplefileupload.com/static/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBb2pPIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--0e2f4cd3bf29e6784e14812508bd0a8ae6929245/One-Piece-at-a-Time-getmp3pro.mp3
   app.all('/search_table', (request, response) => {
     let sql = 'SELECT * FROM music_table';
     database.query(sql, (err, result) => {

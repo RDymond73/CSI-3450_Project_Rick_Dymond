@@ -42,11 +42,14 @@ nav {
     display: table;
 } 
 
-#file_input {
+#file_input, #file_container {
     margin: auto;
     display: table;
     font-family: monospace;
     text-align: center;
+    align-items: center;
+    display: table;
+    padding-left: 13%;
 }
 
 #song, #artist_name, #album, #uploader_name, #mp3_text {
@@ -54,6 +57,10 @@ nav {
     display:table;
     font-family: monospace;
     text-align: center;
+}
+
+#link {
+    display: none;
 }
 
 /* player container styling 

@@ -1,10 +1,11 @@
 
 //variables
-let uploader = document.getElementById('file_input').value;
+let uploader = document.getElementById('simple-file-upload');
 let song = document.getElementById('song');
 let album = document.getElementById('album');
 let artist = document.getElementById('artist_name');
 let uploader_name = document.getElementById('uploader_name');
+let link = document.getElementById('link');
 let playerContainer = document.getElementById('player_container');
 let uploadBTN = document.getElementById('upload');
 let searchBTN = document.getElementById('search');
@@ -18,15 +19,23 @@ let mp3_text = document.getElementById('mp3_text');
 let audio_player = document.getElementById('audio_player');
 let updateRowBTN = document.getElementsByClassName('update');
 let editBTNS = document.querySelectorAll('.editBTN');
+let simplefileupload = document.getElementById('');
+
 const handler = () => {
     const selectedFiles = [...file_input.files];
     console.log(file_input);
   }
+
+  // uploader.addEventListener("fileUploadSuccess", function (e) {
+  //   alert('file upload successful!');
+  // });
+
 file_input.onchange = () => {
     let sourceTag = 'source';
     const selectedFile = file_input.files[0];
     console.log(selectedFile);
     mp3_text.value = selectedFile.name;
+    mp3_text.setAttribute('size', mp3_text.length);
     loadPlayer = document.getElementById('audio_player');
     mp3_src = document.getElementById('source');
     mp3_src.setAttribute('src', './audio/' + selectedFile.name);
@@ -34,7 +43,7 @@ file_input.onchange = () => {
         if(selectedFile == null){
           return alert('No file selected.');
         }
-        getSignedRequest(selectedFile);
+       // getSignedRequest(selectedFile);
       };
 
 // uploadBTN.onclick = function() {
@@ -106,6 +115,13 @@ uploaderField.addEventListener('input', UploadcheckFields); {
     UploadcheckFields(uploader_name);
     }
 }
+
+uploader.addEventListener("fileUploadSuccess", function (e) {
+   link.value = this.value;
+  alert('file upload successful!')
+   console.log(this.value);
+   console.log(uploader.name);
+});
 
 //check text fields
 function checkFields (ev) {
