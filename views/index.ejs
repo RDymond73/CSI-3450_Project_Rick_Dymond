@@ -57,7 +57,7 @@
 			<!-- This is a file uploader for MP3s -->
 			<form action="/insert_table" method="POST" enctype="multipart/form-data">
 			    <!-- <input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>  -->
-				<input type="file" name="avatar_url" id="file_input" class="simple-file-upload">
+				<input type="file" name="avatar_url" id="file_input" class="simple-file-upload" data-maxFileSize="15" required name="mp3_file">
 				<br>
                 <input class ="upload" type="submit" value="Upload">
 			</form>
