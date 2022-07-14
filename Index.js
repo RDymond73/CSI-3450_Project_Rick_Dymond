@@ -102,7 +102,7 @@ app.use(express.json());
 
 //app.use(upload());
 
-app.use(express.body)
+
 
 app.use(express.urlencoded({ 
   extended: true, 

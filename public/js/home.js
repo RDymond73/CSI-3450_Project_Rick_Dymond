@@ -101,11 +101,11 @@ uploaderField.addEventListener('input', checkFields); {
     }
 }
 
-uploaderField.addEventListener('input', UploadcheckFields); {
-    if (uploader_name.value != "") {
-    UploadcheckFields(uploader_name);
-    }
-}
+// uploaderField.addEventListener('input', UploadcheckFields); {
+//     if (uploader_name.value != "") {
+//     UploadcheckFields(uploader_name);
+//     }
+// }
 
 //check text fields
 function checkFields (ev) {
