@@ -136,6 +136,7 @@ function UploadcheckFields (ev) {
 function uploadFile(file, signedRequest, url){
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', signedRequest);
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "https://localhost:3000");
     xhr.onreadystatechange = () => {
       if(xhr.readyState === 4){
         if(xhr.status === 200){
@@ -153,6 +154,8 @@ function uploadFile(file, signedRequest, url){
 function getSignedRequest(file){
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `/sign-s3?file-name=${encodeURIComponent(file.name)}&file-type=${file.type}`);
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "https://localhost:3000");
+    console.log(xhr);
     xhr.onreadystatechange = () => {
       if(xhr.readyState === 4){
         if(xhr.status === 200){

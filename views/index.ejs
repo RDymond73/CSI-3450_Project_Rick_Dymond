@@ -9,6 +9,7 @@
     <title>Rick's Music Database</title>
 	<link rel="shortcut icon" href="./images/music_gif.gif" type="image/x-icon">
     <link rel="stylesheet" href="css/Index.css">
+	<script src="https://app.simplefileupload.com/buckets/237b447cb8cf3cd84d5e9559ffa77d06.js"></script>
 </head>
 
 <!-- this is the body of the document containing the page contents -->
@@ -55,7 +56,8 @@
 
 			<!-- This is a file uploader for MP3s -->
 			<form action="/insert_table" method="POST" enctype="multipart/form-data">
-			    <input type="file" id="file_input" accept="audio/*" required name="mp3_file"/> 
+			    <!-- <input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>  -->
+				<input type="hidden" name="avatar_url" id="avatar_url" class="simple-file-upload">
 				<br>
                 <input class ="upload" type="submit" value="Upload">
 			</form>

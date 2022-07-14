@@ -102,13 +102,15 @@ app.use(express.json());
 
 //app.use(upload());
 
+app.use(express.body)
+
 app.use(express.urlencoded({ 
   extended: true, 
   SameSite: 'none'
 }));
 
 app.use(cors({
-   origin: 'https://test222222222godhelpme.herokuapp.com'
+   origin: 'https://s3.console.aws.amazon.com/'
 }));
 
 //test server via http
@@ -235,7 +237,7 @@ app.get('/create_table', (req, res) => {
     let album = req.query.album;
     let artist = req.query.artist;
     let uploader = req.query.uploader;
-    let mp3_file = req.files.mp3_file;
+    //let mp3_file = req.files.mp3_file;
     console.log(song);
     console.log(album);
     console.log(artist);
