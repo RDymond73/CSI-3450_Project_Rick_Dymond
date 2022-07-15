@@ -9,7 +9,6 @@
     <title>Rick's Music Database</title>
 	<link rel="shortcut icon" href="./images/music_gif.gif" type="image/x-icon">
     <link rel="stylesheet" href="css/Index.css">
-	<script src="https://app.simplefileupload.com/buckets/b93b3ad01840790a27eb67613525d9bb.js"></script>
 </head>
 
 <!-- this is the body of the document containing the page contents -->
@@ -42,10 +41,9 @@
 
 			<!--This is an audio player for the mp3 files-->
               <% if (player!="") { %>
-				<%source%>
 
-			<audio controls id="audio_player" autoplay>
-                  <source id="source" src="<%= source %>">
+			<audio controls id="audio_player">
+                  <source id="source" src="">
 			</audio>
 			  <%} else {%>
 				<audio controls id="audio_player" >
@@ -57,7 +55,7 @@
 
 		<!-- section for database table display -->
 		<section id="table_container">
-            <h3 id="music_table_title"><%= title %></h3>
+            <h3 id="music_table_title">Update Selected Row</h3>
             <% if (action == 'add') { %>
                 <% } else { %>
 			<table id="music_table">
@@ -77,8 +75,7 @@
                         <% if(index.length > 0)
                         {
                             index.forEach(function(data) {
-                            %>
-							<% index.source %>	
+                            %>	
                                 <tr>
                                     <td><%= data.id %></td>
                                     <td><%= data.song %></td>
@@ -89,7 +86,7 @@
 									<td hidden><%= data.link %></td>
                                     <td><button id = 'selectRow' class="select" onclick="location.href='/select_row?id=' + '<%= data.id%>' + '&mp3=' +'<%= data.mp3 %>' + '&source=' +'<%=data.link%>'">Select</button></td>
                                     <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>' + '&mp3=' + '<%= data.mp3%>' + '&link=' + '<%= data.link %>'">Delete</button></td>
-                                    <td><button class="update" onclick="location.href='/update_row?id=' + '<%= data.id %>'">Update</button></td>
+                                    <td><button id="updateRow" class="update" onclick="location.href='/update_row?id=' + '<%data.id%>'">Update</button></td>
                                 </tr>
                         <%
                             });
@@ -112,18 +109,15 @@
 		<section id="upload_section" style="align-items: center;">
 			<!-- This is a file uploader for MP3s -->
 			<div style="display: inline-block;">
-				<form action="/insert_table" method="POST" enctype="multipart/form-data" id="file_container">
-					<p>Click on the box below to upload an MP3 file to bucket!</p>
-				<input type="hidden" data-accepted="audio/*" id="simple-file-upload" class="simple-file-upload" data-maxFileSize="5" required name="file_input" data-preview="false" data-width="500" data-height="50" >
-				<br>
-				</form>
+				<h3 id="update_instructions">Fill out text fields below & click "Update Info" to update row.</h3>
 			</div>
 			<br>
 
 			<!-- field for adding database info  -->
 			<div display: inline;>
-			<form action="/insert_table?" method="get" style="display:inline-block;">
+			<form action="/update?" method="get" style="display:inline-block;">
 				<div style="display: inline;">
+				<input type="text" name="id" id="id" widnoth="100px" required placeholder="ID">
 				<input type="text" name="song" id="song" widnoth="100px" required placeholder="Song title">
 				<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
 				<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
@@ -132,8 +126,7 @@
 				<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
 				<input type="text" name="mp3_text" id="mp3_text" width="100px" required placeholder="MP3 File Name -->">
 				<input type="file" id="file_input" accept="audio/*" style="display: inline;" required name="mp3_file"/>
-				<button id="submit_info" onclick="location.href='/insert_table?'" style="display:block;">Submit Info</button>
-				<input type="text" name="link" id="link" placeholder="Link">
+				<button id="submit_info" onclick="location.href='/update'" style="display:block;">Update Info</button>
 				</div>
             </form>
 			</div>

@@ -224,25 +224,31 @@ app.post('/insert_table', (request, response) => {
   });
 
 //update row
-app.all('/update_row', (req, res) => {
+app.get('/update_row', (req, res) => {
     let rowID = req.query.id;
-    let song =  req.query.song;
-    let album = req.query.album;
-    let artist = req.query.artist;
-    let uploader = req.query.uploader;
-    //let mp3_file = req.files.mp3_file;
-    console.log(song);
-    console.log(album);
-    console.log(artist);
-    console.log(uploader);
-    let sql = 'UPDATE music_table SET (' + song + ", '" + album +"', '" + artist + "', '" + uploader + ') WHERE id=' + rowID ;
-    database.query(sql, (err, result) => {
+    console.log(rowID);
+    let sql = 'SELECT * FROM music_table WHERE id=' +rowID;
+    database.query(sql, (err, data) => {
       if (err) throw err;
-      console.log(result);
-    });
-    res.redirect('/home');
-    console.log('Row Deleted');
+      res.render(__dirname + '/views/Update.ejs', {action:'list', index: data, player: 'update'});
+     });
+    console.log('Row Selected for Update');
   });
+
+app.get('/update', (request, response) => {
+  let rowID = request.query.id;
+  let song =  request.query.song;
+  let album = request.query.album;
+  let artist = request.query.artist_name;
+  let uploader = request.query.uploader_name;
+  let mp3_file = request.query.mp3_text;
+  let sql = 'UPDATE music_table SET ' + "id='" + rowID + "', song='"+ song + "', album='" + album +"', artist='" + artist + "', uploader='" + uploader +  "', mp3='" + mp3_file + "' " + 'WHERE id=' + rowID;
+    database.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    });
+    response.redirect('/home');
+  });  
 
 //select row
 app.get('/select_row', (request, response) => {

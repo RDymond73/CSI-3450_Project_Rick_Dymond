@@ -31,7 +31,7 @@ nav {
 }
 
 /* style for caption */
-#caption, #music_table_title {
+#caption, #music_table_title, #update_instructions {
     text-align: center;
     font-family: monospace;
 }
@@ -54,6 +54,14 @@ nav {
 
 /* styling for text fields */
 #song, #artist_name, #album, #uploader_name, #mp3_text {
+    margin:auto;
+    display:inline-block;
+    font-family: monospace;
+    text-align: center;
+}
+
+#id {
+    width: 5%;
     margin:auto;
     display:inline-block;
     font-family: monospace;
