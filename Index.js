@@ -28,6 +28,7 @@ AWS.config = new AWS.Config();
 AWS.config.accessKeyId = "AKIA3SJWYFGDN4F5T3BJ";
 AWS.config.secretAccessKey = "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";
 AWS.config.region = "us-east-1";
+
 //heroku config:set AWS_ACCESS_KEY_ID=AKIA3SJWYFGDHDGLKXBI AWS_SECRET_ACCESS_KEY=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 *not using anymore
 //heroku config:set S3_BUCKET_NAME=csi3450-project-rick-dymond *not using anymore
 
