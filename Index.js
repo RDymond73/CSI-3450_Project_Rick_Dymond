@@ -322,42 +322,49 @@ app.all('/drop_row', (req, res) => {
     }).then(() => {
       console.log('Delete file @ ' + link);
       console.log('File Deleted');
-      res.redirect('/home');
+      res.redirect('/drop_row2?' + 'id=' + rowID + '&mp3=' + mp3 + '&link=' + link);
+      console.log('Row Deleted');
     }).catch((error) => {
       console.log(error);
     });
-    let sql1 = 'DELETE FROM songs WHERE id=' + rowID;
-    let databaseName = 'music_db';
-    database.query(sql1, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-    let sql2 = 'DELETE FROM albums WHERE album_id=' + rowID;
-    database.query(sql2, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-    let sql3 = 'DELETE FROM artists WHERE artist_id=' + rowID;
-    database.query(sql3, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-    let sql4 = 'DELETE FROM genre WHERE genre_id=' + rowID;
-    database.query(sql4, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-    let sql5 = 'DELETE FROM users WHERE user_id=' + rowID;
-    database.query(sql5, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-  let sql6 = 'DELETE FROM mp3 WHERE mp3_id=' + rowID;
-  database.query(sql6, (err, result) => {
+});
+
+app.get('/drop_row2', (req, res) => {
+  let rowID = req.query.id;
+  let mp3 = req.query.mp3;
+  let link = req.query.link;
+  let sql1 = 'DELETE FROM songs WHERE id=' + rowID;
+  let databaseName = 'music_db';
+  database.query(sql1, (err, result) => {
     if (err) throw err;
     console.log(result);
   });
-  console.log('Row Deleted');
+  let sql2 = 'DELETE FROM albums WHERE album_id=' + rowID;
+  database.query(sql2, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+  });
+  let sql3 = 'DELETE FROM artists WHERE artist_id=' + rowID;
+  database.query(sql3, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+  });
+  let sql4 = 'DELETE FROM genre WHERE genre_id=' + rowID;
+  database.query(sql4, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+  });
+  let sql5 = 'DELETE FROM users WHERE user_id=' + rowID;
+  database.query(sql5, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+  });
+let sql6 = 'DELETE FROM mp3 WHERE mp3_id=' + rowID;
+database.query(sql6, (err, result) => {
+  if (err) throw err;
+  console.log(result);
+});
+res.redirect('/home');
 });
 
 //get signature from s3
