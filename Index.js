@@ -52,34 +52,34 @@ const database = mysql.createPool({
 
 module.exports = database;
 
-var db_config = {
-  host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'example'
-};
+// var db_config = {
+//   host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'example'
+// };
 
 //hanndle db disconnects
-let connection;
-function handleDisconnect() {
-  connection = mysql.createConnection(db_config);
+// let connection;
+// function handleDisconnect() {
+//   connection = mysql.createConnection(db_config);
 
-  connection.connect(function(err) {
-    if(err) {
-      console.log('error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000);
-    }
-  });
-  connection.on('error', function(err) {
-    console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
-      handleDisconnect();
-    } else {
-      throw err;
-      handleDisconnect();
-    }
-  });
-}
+//   connection.connect(function(err) {
+//     if(err) {
+//       console.log('error when connecting to db:', err);
+//       setTimeout(handleDisconnect, 2000);
+//     }
+//   });
+//   connection.on('error', function(err) {
+//     console.log('db error', err);
+//     if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+//       handleDisconnect();
+//     } else {
+//       throw err;
+//       handleDisconnect();
+//     }
+//   });
+// }
 
 const uploadFile = (fileName) => {
   // Read content from the file
@@ -115,7 +115,7 @@ app.use(express.urlencoded({
 }));
 
 app.use(cors({
-   origin: 'https://s3.console.aws.amazon.com/'
+   origin: '*'
 }));
 
 //test server via http
@@ -179,7 +179,7 @@ app.get('/create_table', (req, res) => {
 
 //drop table from database for admin
 app.get('/drop_table', (req, res) => {
-    let sql = 'DROP TABLE music_table';
+    let sql = 'DROP TABLE songs';
     database.query(sql, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -193,8 +193,11 @@ app.get('/drop_table', (req, res) => {
 app.get('/insert_table', (request, response) => {
     let song =  request.query.song;
     let album = request.query.album;
+    let release_year = request.query.release_year;
     let artist = request.query.artist_name;
+    let genre = request.query.genre;
     let uploader = request.query.uploader_name;
+    let date_added = request.query.date_added;
     let mp3_file = request.query.mp3_text;
     let link = request.query.link;
     console.log(song);
@@ -202,11 +205,38 @@ app.get('/insert_table', (request, response) => {
     console.log(artist);
     console.log(uploader);
     console.log(mp3_file);
-    let sql = "INSERT INTO `music_table`(`id`, `song`, `album`, `artist`, `uploader`, `mp3`, `link`) VALUES (NULL, " + "'" + song + " ', " + "'" + album + "', '" + artist + "' , " + "'" + uploader + "', '" + mp3_file + "', '" + link + "');";
-    database.query(sql, (err, result) => {
+    let sql1 = "INSERT INTO `songs`(`id`, `song_name`, `release_year`, `date_added`) VALUES (NULL, " + "'" + song + " ', '"  + release_year + "' ," + "'" + date_added + "');";
+    database.query(sql1, (err, result) => {
       if (err) throw err;
       console.log(result);
     });
+    let sql2 = "INSERT INTO `albums`(`album_id`, `album_name`) VALUES (NULL, " + "'" + album + "');";
+    database.query(sql2, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    let sql3 = "INSERT INTO `artists`(`artist_id`, `artist_name`) VALUES (NULL, " + "'" + artist + "');";
+    database.query(sql3, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    let sql4 = "INSERT INTO `genre`(`genre_id`, `music_genre`) VALUES (NULL, " + "'" + genre + "');";
+    database.query(sql4, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    let sql5 = "INSERT INTO `mp3`(`mp3_id`, `file_name`, `link`) VALUES (NULL, " + "'" + mp3_file + "' ,'" + link + "');";
+    database.query(sql5, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+    let sql6 = "INSERT INTO `users`(`user_id`, `uploader_name`) VALUES (NULL, " + "'" + uploader + "');";
+    database.query(sql6, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
+
+
     response.redirect('/home');
     console.log('Insert Query Successful');
   });
@@ -228,7 +258,7 @@ app.post('/insert_table', (request, response) => {
 app.get('/update_row', (req, res) => {
     let rowID = req.query.id;
     console.log(rowID);
-    let sql = 'SELECT * FROM music_table WHERE id=' +rowID;
+    let sql = 'SELECT * FROM songs WHERE id=' +rowID;
     database.query(sql, (err, data) => {
       if (err) throw err;
       res.render(__dirname + '/views/Update.ejs', {action:'list', index: data, player: 'update'});
@@ -243,7 +273,7 @@ app.get('/update', (request, response) => {
   let artist = request.query.artist_name;
   let uploader = request.query.uploader_name;
   let mp3_file = request.query.mp3_text;
-  let sql = 'UPDATE music_table SET ' + "id='" + rowID + "', song='"+ song + "', album='" + album +"', artist='" + artist + "', uploader='" + uploader +  "', mp3='" + mp3_file + "' " + 'WHERE id=' + rowID;
+  let sql = 'UPDATE songs SET ' + "id='" + rowID + "', song='"+ song + "', album='" + album +"', artist='" + artist + "', uploader='" + uploader +  "', mp3='" + mp3_file + "' " + 'WHERE id=' + rowID;
     database.query(sql, (err, result) => {
     if (err) throw err;
     console.log(result);
@@ -258,7 +288,7 @@ app.get('/select_row', (request, response) => {
     let mp3_file = request.query.mp3;
     let link = request.query.source;
     //let source_string = '/audio/' + mp3_file.replace(/(^"|"$)/g, '');
-    let sql = 'SELECT * FROM music_table WHERE id=' +rowID;
+    let sql = 'SELECT * FROM songs, albums, artists, genre, mp3, users WHERE id=' +rowID;
     //console.log(source);
     console.log(link);
     database.query(sql, (err, data) => {
@@ -271,7 +301,7 @@ app.get('/select_row', (request, response) => {
 
 //Load table into index.ejs
 app.all('/home', (req, res) => {
-  let sql = 'SELECT * FROM music_table ORDER BY id';
+  let sql = 'SELECT * FROM songs, albums, artists, genre, mp3, users ORDER BY id';
   database.query(sql, (err, data) => {
     if (err) throw err;
     console.log('Database table loaded');
@@ -284,16 +314,10 @@ app.all('/drop_row', (req, res) => {
     let rowID = req.query.id;
     let mp3 = req.query.mp3;
     let link = req.query.link;
-    let sql = 'DELETE FROM music_table WHERE id=' + rowID;
-    let databaseName = 'music_db';
-    database.query(sql, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
     axios.delete('https://app.simplefileupload.com/api/v1/file?url=' + link, {
       auth: {
-        username: 'pb574627fb61bb20a5d0f69aa972be0ad',
-        password: 'sa2e110ef066b084c82e5b47c0ccaad16'
+        username: 'pfd4f02c7584501cb13c684406423ecd5',
+        password: 'sa3052732fb52dd967051cbd84129bf80'
       }
     }).then(() => {
       console.log('Delete file @ ' + link);
@@ -302,35 +326,66 @@ app.all('/drop_row', (req, res) => {
     }).catch((error) => {
       console.log(error);
     });
-    console.log('Row Deleted');
-  });
+  //   let sql1 = 'DELETE FROM songs WHERE id=' + rowID;
+  //   let databaseName = 'music_db';
+  //   database.query(sql1, (err, result) => {
+  //     if (err) throw err;
+  //     console.log(result);
+  //   });
+  //   let sql2 = 'DELETE FROM albums WHERE album_id=' + rowID;
+  //   database.query(sql2, (err, result) => {
+  //     if (err) throw err;
+  //     console.log(result);
+  //   });
+  //   let sql3 = 'DELETE FROM artists WHERE artist_id=' + rowID;
+  //   database.query(sql3, (err, result) => {
+  //     if (err) throw err;
+  //     console.log(result);
+  //   });
+  //   let sql4 = 'DELETE FROM genre WHERE genre_id=' + rowID;
+  //   database.query(sql4, (err, result) => {
+  //     if (err) throw err;
+  //     console.log(result);
+  //   });
+  //   let sql5 = 'DELETE FROM users WHERE user_id=' + rowID;
+  //   database.query(sql5, (err, result) => {
+  //     if (err) throw err;
+  //     console.log(result);
+  //   });
+  // let sql6 = 'DELETE FROM mp3 WHERE mp3_id=' + rowID;
+  // database.query(sql6, (err, result) => {
+  //   if (err) throw err;
+  //   console.log(result);
+  // });
+  console.log('Row Deleted');
+});
 
 //get signature from s3
-app.get('/sign-s3', (req, res) => {
-    const s3 = new AWS.S3();
-    const fileName = req.query['file-name'];
-    const fileType = req.query['file-type'];
-    const s3Params = {
-      Bucket: S3_BUCKET,
-      Key: fileName,
-      Expires: 60,
-      ContentType: fileType,
-      ACL: 'public-read'
-    };
+// app.get('/sign-s3', (req, res) => {
+//     const s3 = new AWS.S3();
+//     const fileName = req.query['file-name'];
+//     const fileType = req.query['file-type'];
+//     const s3Params = {
+//       Bucket: S3_BUCKET,
+//       Key: fileName,
+//       Expires: 60,
+//       ContentType: fileType,
+//       ACL: 'public-read'
+//     };
   
-    s3.getSignedUrl('putObject', s3Params, (err, data) => {
-      if(err){
-        console.log(err);
-        return res.end();
-      }
-      const returnData = {
-        signedRequest: data,
-        url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-      };
-      res.write(JSON.stringify(returnData));
-      res.end();
-    });
-  });
+//     s3.getSignedUrl('putObject', s3Params, (err, data) => {
+//       if(err){
+//         console.log(err);
+//         return res.end();
+//       }
+//       const returnData = {
+//         signedRequest: data,
+//         url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+//       };
+//       res.write(JSON.stringify(returnData));
+//       res.end();
+//     });
+//   });
 
   // api setup for s3
   // app.use((req, res,) => {

@@ -53,7 +53,7 @@ nav {
 }
 
 /* styling for text fields */
-#song, #artist_name, #album, #uploader_name, #mp3_text {
+#song, #artist_name, #album, #uploader_name, #mp3_text, #date_added, #release_year, #genre {
     margin:auto;
     display:inline-block;
     font-family: monospace;
