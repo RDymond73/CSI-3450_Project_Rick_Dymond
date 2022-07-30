@@ -237,7 +237,7 @@ app.get('/insert_table', (request, response) => {
     });
 
 
-    response.redirect('/home');
+    response.redirect('/buffer');
     console.log('Insert Query Successful');
   });
 app.post('/insert_table', (request, response) => {
@@ -258,7 +258,7 @@ app.post('/insert_table', (request, response) => {
 app.get('/update_row', (req, res) => {
     let rowID = req.query.id;
     console.log(rowID);
-    let sql = 'SELECT * FROM songs WHERE id=' +rowID;
+    let sql = 'SELECT * FROM app_table WHERE id=' +rowID;
     database.query(sql, (err, data) => {
       if (err) throw err;
       res.render(__dirname + '/views/Update.ejs', {action:'list', index: data, player: 'update'});
@@ -270,15 +270,45 @@ app.get('/update', (request, response) => {
   let rowID = request.query.id;
   let song =  request.query.song;
   let album = request.query.album;
+  let release_year = request.query.release_year;
   let artist = request.query.artist_name;
+  let genre = request.query.genre;
   let uploader = request.query.uploader_name;
+  let date_added = request.query.date_added;
   let mp3_file = request.query.mp3_text;
-  let sql = 'UPDATE songs SET ' + "id='" + rowID + "', song='"+ song + "', album='" + album +"', artist='" + artist + "', uploader='" + uploader +  "', mp3='" + mp3_file + "' " + 'WHERE id=' + rowID;
-    database.query(sql, (err, result) => {
+  let link = request.query.link;
+  let sql1 = 'UPDATE songs SET ' + "id='" + rowID + "', song_name='"+ song + "', release_year='" + release_year +"', date_added='" + date_added + "' " + 'WHERE id=' + rowID;
+    database.query(sql1, (err, result) => {
     if (err) throw err;
     console.log(result);
     });
-    response.redirect('/home');
+  let sql2 = 'UPDATE albums SET ' + "album_id='" + rowID + "', album_name='"+ album  + "' " + 'WHERE album_id=' + rowID;
+    database.query(sql2, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    });
+  let sql3 = 'UPDATE artists SET ' + "artist_id='" + rowID + "', artist_name='"+ artist + "' " + 'WHERE artist_id=' + rowID;
+    database.query(sql3, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    });
+  let sql4 = 'UPDATE genre SET ' + "genre_id='" + rowID + "', music_genre='"+ genre + "' " + 'WHERE genre_id=' + rowID;
+    database.query(sql4, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    });
+  let sql5 = 'UPDATE users SET ' + "user_id='" + rowID + "', uploader_name='"+ uploader + "' " + 'WHERE user_id=' + rowID;
+    database.query(sql5, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    });
+  let sql6 = 'UPDATE mp3 SET ' + "mp3_id='" + rowID + "', file_name='"+ mp3_file + "' " + 'WHERE mp3_id=' + rowID;
+    database.query(sql6, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    });
+
+    response.redirect('/buffer2');
   });  
 
 //select row
@@ -288,7 +318,7 @@ app.get('/select_row', (request, response) => {
     let mp3_file = request.query.mp3;
     let link = request.query.source;
     //let source_string = '/audio/' + mp3_file.replace(/(^"|"$)/g, '');
-    let sql = 'SELECT * FROM songs, albums, artists, genre, mp3, users WHERE id=' +rowID;
+    let sql = 'SELECT * FROM app_table WHERE id=' +rowID;
     //console.log(source);
     console.log(link);
     database.query(sql, (err, data) => {
@@ -301,7 +331,7 @@ app.get('/select_row', (request, response) => {
 
 //Load table into index.ejs
 app.all('/home', (req, res) => {
-  let sql = 'SELECT * FROM songs, albums, artists, genre, mp3, users ORDER BY id';
+  let sql = 'SELECT * FROM  app_table ORDER BY id';
   database.query(sql, (err, data) => {
     if (err) throw err;
     console.log('Database table loaded');
@@ -364,8 +394,18 @@ database.query(sql6, (err, result) => {
   if (err) throw err;
   console.log(result);
 });
-res.redirect('/home');
+res.redirect('/buffer');
 });
+
+app.get("/buffer", (req, res) => {
+  res.redirect('/home');
+  console.log('HTTP Buffer');
+  });
+
+app.get("/buffer2", (req, res) => {
+  res.redirect('/buffer');
+  console.log('HTTP BufferX2');
+  });
 
 //get signature from s3
 // app.get('/sign-s3', (req, res) => {

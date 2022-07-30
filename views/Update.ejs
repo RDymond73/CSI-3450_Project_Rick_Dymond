@@ -62,8 +62,11 @@
 					<th>ID</th>
 					<th>Song Name</th>
 					<th>Album Name</th>
+					<th>Release Year</th>
                     <th>Artist Name</th>
+					<th>Genre</th>
 					<th>Uploader Name</th>
+					<th>Date Added</th>
                     <th>MP3 File</th>
 					<th hidden>Link to File</th>
                     <th>Select</th>
@@ -77,11 +80,14 @@
                             %>	
                                 <tr>
                                     <td><%= data.id %></td>
-                                    <td><%= data.song %></td>
-                                    <td><%= data.album %></td>
-                                    <td><%= data.artist %></td>
-                                    <td><%= data.uploader %></td>
-                                    <td><%= data.mp3 %></td>
+                                    <td><%= data.song_name %></td>
+                                    <td><%= data.album_name %></td>
+									<td><%= data.release_year %></td>
+                                    <td><%= data.artist_name %></td>
+									<td><%= data.music_genre %></td>
+                                    <td><%= data.uploader_name %></td>
+									<td><%= data.date_added %></td>
+                                    <td><%= data.file_name %></td>
 									<td hidden><%= data.link %></td>
                                     <td><button id = 'selectRow' class="select" onclick="location.href='/select_row?id=' + '<%= data.id%>' + '&mp3=' +'<%= data.mp3 %>' + '&source=' +'<%=data.link%>'">Select</button></td>
                                     <td><button id = 'deleteRow' class="delete" onclick="location.href='/drop_row?id=' + '<%= data.id%>' + '&mp3=' + '<%= data.mp3%>' + '&link=' + '<%= data.link %>'">Delete</button></td>
@@ -119,10 +125,13 @@
 				<input type="text" name="id" id="id" widnoth="100px" required placeholder="ID">
 				<input type="text" name="song" id="song" widnoth="100px" required placeholder="Song title">
 				<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
+				<input type="text" name="release_year" id="release_year" width="100px" required placeholder="Release Year">
 				<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
 				</div>
 				<div style="display: inline;">
+				<input type="text" name="genre" id="genre" width="100px" required placeholder="Genre">
 				<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
+				<input type="text" name="date_added" id="date_added" width="100px" required placeholder="Date Added">
 				<input type="text" name="mp3_text" id="mp3_text" width="100px" required placeholder="MP3 File Name -->">
 				<input type="file" id="file_input" accept="audio/*" style="display: inline;" required name="mp3_file"/>
 				<button id="submit_info" onclick="location.href='/update'" style="display:block;">Update Info</button>

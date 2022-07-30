@@ -120,6 +120,7 @@
 			<div style="display: inline-block;">
 				<form action="/insert_table" method="POST" enctype="multipart/form-data" id="file_container">
 					<p>Click on the box below to upload an MP3 file to bucket!</p>
+					<p>(Note: replace spaces in file name with '_')</p>
 				<input type="hidden" data-accepted="audio/*" id="simple-file-upload" class="simple-file-upload" data-maxFileSize="5" required name="file_input" data-preview="false" data-width="500" data-height="50" >
 				<br>
 				</form>
@@ -136,7 +137,7 @@
 				<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
 				</div>
 				<div style="display: inline;">
-					<input type="text" name="genre" id="genre" width="100px" required placeholder="Genre">
+				<input type="text" name="genre" id="genre" width="100px" required placeholder="Genre">
 				<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
 				<input type="text" name="date_added" id="date_added" width="100px" required placeholder="Date Added">
 				<input type="text" name="mp3_text" id="mp3_text" width="100px" required placeholder="MP3 File Name -->">

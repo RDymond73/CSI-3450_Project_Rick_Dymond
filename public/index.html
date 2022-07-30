@@ -39,55 +39,72 @@
 		<section id="player_container"> 
 			<p id="caption"> Upload an audio file and play your favorite music!  </p>
 
-			<!--This is an audio player for the mp3 files-->
-
-			<audio controls id="audio_player" >
-                  <source id="source" src="">
-			</audio>
+				<audio controls id="audio_player" >
+					<source id="source" src="">
+			  </audio>
 			<br>
 		</section>
 
 		<!-- section for database table display -->
 		<section id="table_container">
-            <h3 id="music_table_title"></h3>
+            <h3 id="music_table_title">Music Table</h3>
 			<table id="music_table">
 				<thead>
 					<th>ID</th>
 					<th>Song Name</th>
 					<th>Album Name</th>
-                    <th>Artist name</th>
+					<th>Release Year</th>
+                    <th>Artist Name</th>
+					<th>Genre</th>
 					<th>Uploader Name</th>
-                    <th>MP3 file</th>
+					<th>Date Added</th>
+                    <th>MP3 File</th>
+					<th hidden>Link to File</th>
                     <th>Select</th>
                     <th>Delete</th>
                     <th>Update</th>
                 </thead>
 				<tbody>
-                 	<tr>
-                        <td colspan="9">No Data Found</td>
-                 	</tr>
+                     <tr>
+                        <td colspan="12">No Data Found</td>
+                     </tr>
 				</tbody>
 			</table>
-			<br>
 		</section>
-		
+
 		<!-- upload section -->
-		<section id="upload_section">
-						<!-- This is a file uploader for MP3s -->
-			<form action="/insert_table" method="POST" enctype="multipart/form-data" id="file_container">
-				<input type="hidden" data-accepted="audio/*" id="simple-file-upload" class="simple-file-upload" data-maxFileSize="5" required name="file_input" data-preview="false">
-				<input type="file" id="file_input" accept="audio/*" required name="mp3_file"/>
-			</form>
+		<section id="upload_section" style="align-items: center;">
+			<!-- This is a file uploader for MP3s -->
+			<div style="display: inline-block;">
+				<form action="/insert_table" method="POST" enctype="multipart/form-data" id="file_container">
+					<p>Click on the box below to upload an MP3 file to bucket!</p>
+					<p>(Note: replace spaces in file name with '_')</p>
+				<input type="hidden" data-accepted="audio/*" id="simple-file-upload" class="simple-file-upload" data-maxFileSize="5" required name="file_input" data-preview="false" data-width="500" data-height="50" >
+				<br>
+				</form>
+			</div>
+			<br>
+
 			<!-- field for adding database info  -->
-			<form action="/insert_table?" method="get">
-			<input type="text" name="song" id="song" widnoth="100px" required placeholder="Song title">
-			<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
-			<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
-			<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
-			<input type="text" name="mp3_text" id="mp3_text" width="100px" required placeholder="MP3">
-			<button id="submit_info" onclick="location.href='/insert_table?'">Submit Info</button>
-			<input type="text" name="link" id="link" placeholder="Link">
+			<div display: inline;>
+			<form action="/insert_table?" method="get" style="display:inline-block;">
+				<div style="display: inline;">
+				<input type="text" name="song" id="song" widnoth="100px" required placeholder="Song title">
+				<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
+				<input type="text" name="release_year" id="release_year" width="100px" required placeholder="Release Year">
+				<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
+				</div>
+				<div style="display: inline;">
+				<input type="text" name="genre" id="genre" width="100px" required placeholder="Genre">
+				<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
+				<input type="text" name="date_added" id="date_added" width="100px" required placeholder="Date Added">
+				<input type="text" name="mp3_text" id="mp3_text" width="100px" required placeholder="MP3 File Name -->">
+				<input type="file" id="file_input" accept="audio/*" style="display: inline;" required name="mp3_file"/>
+				<button id="submit_info" onclick="location.href='/insert_table?'" style="display:block;">Submit Info</button>
+				<input type="text" name="link" id="link" placeholder="Link">
+				</div>
             </form>
+			</div>
 			<br>
 		</section>
 	</article>
