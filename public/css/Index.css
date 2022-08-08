@@ -31,7 +31,7 @@ nav {
 }
 
 /* style for caption */
-#caption, #music_table_title, #update_instructions {
+#caption, #music_table_title, #update_instructions, #rLink {
     text-align: center;
     font-family: monospace;
 }

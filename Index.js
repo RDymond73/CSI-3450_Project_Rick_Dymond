@@ -235,24 +235,28 @@ app.get('/insert_table', (request, response) => {
       if (err) throw err;
       console.log(result);
     });
-
+    let sql7 = "INSERT INTO `ranks`(`song_id`, `times_played`) VALUES (NULL, 0);";
+    database.query(sql7, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+    });
 
     response.redirect('/buffer');
     console.log('Insert Query Successful');
   });
-app.post('/insert_table', (request, response) => {
-    let mp3_file = request.mp3_file;
-    console.log(mp3_file);
-    // mp3_file.mv("/public/audio/" + mp3_file.name, function(error) {
-    //   if (error) {
-    //     console.log('error moving audio file');
-    //   } else {
-    //     console.log('audio file moved');
-    //   } 
-    // });
-    response.redirect('/home');
-    console.log('Insert Query Successful');
-  });
+// app.post('/insert_table', (request, response) => {
+//     let mp3_file = request.mp3_file;
+//     console.log(mp3_file);
+//     // mp3_file.mv("/public/audio/" + mp3_file.name, function(error) {
+//     //   if (error) {
+//     //     console.log('error moving audio file');
+//     //   } else {
+//     //     console.log('audio file moved');
+//     //   } 
+//     // });
+//     response.redirect('/home');
+//     console.log('Insert Query Successful');
+//   });
 
 //update row
 app.get('/update_row', (req, res) => {
@@ -327,7 +331,12 @@ app.get('/select_row', (request, response) => {
       response.render(__dirname + '/views/index.ejs', {title: 'Selected Track' , action:'list', index: data, player: 'update', source: link});
       console.log('Select Query');
       });
+    let sql2 = "UPDATE ranks SET times_played= times_played+1 WHERE song_id=" + rowID + ";";
+    database.query(sql2, (err, result) => {
+      if (err) throw err;
+      console.log(result);
     });
+  });
 
 //Load table into index.ejs
 app.all('/home', (req, res) => {
@@ -394,8 +403,22 @@ database.query(sql6, (err, result) => {
   if (err) throw err;
   console.log(result);
 });
+let sql7 = 'DELETE FROM ranks WHERE song_id=' + rowID;
+database.query(sql7, (err, result) => {
+  if (err) throw err;
+  console.log(result);
+});
 res.redirect('/buffer');
 });
+
+app.get('/rankings', (req, res) => {
+  let sql = 'SELECT * FROM  rankings_view ORDER BY times_played DESC';
+  database.query(sql, (err, data) => {
+    if (err) throw err;
+    console.log('Database table loaded');
+    res.render(__dirname + '/views/Rankings.ejs', {title: 'Top Played Songs' , action:'list', index: data, player: ""});
+    });
+  });
 
 app.get("/buffer", (req, res) => {
   res.redirect('/home');

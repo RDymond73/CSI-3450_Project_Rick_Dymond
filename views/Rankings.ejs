@@ -9,7 +9,7 @@
     <title>Rick's Music Database</title>
 	<link rel="shortcut icon" href="./images/music_gif.gif" type="image/x-icon">
     <link rel="stylesheet" href="css/Index.css">
-	<script src="https://app.simplefileupload.com/buckets/b93b3ad01840790a27eb67613525d9bb.js"></script>
+
 </head>
 
 <!-- this is the body of the document containing the page contents -->
@@ -53,7 +53,6 @@
 					<source id="source" src="">
 			  </audio>
 			  <%}%>
-			<br>
 		</section>
 
 		<!-- section for database table display -->
@@ -63,7 +62,7 @@
                 <% } else { %>
 			<table id="music_table">
 				<thead>
-					<th>ID</th>
+					<th>Times played</th>
 					<th>Song Name</th>
 					<th>Album Name</th>
 					<th>Release Year</th>
@@ -84,7 +83,7 @@
                             %>
 							<% index.source %>	
                                 <tr>
-                                    <td><%= data.id %></td>
+									<td><%= data.times_played %></td>
                                     <td><%= data.song_name %></td>
                                     <td><%= data.album_name %></td>
 									<td><%= data.release_year %></td>
@@ -105,7 +104,7 @@
                         { 
                         %> 
                      <tr>
-                        <td colspan="12">No Data Found</td>
+                        <td colspan="13">No Data Found</td>
                      </tr>
                      <%
                     }
@@ -113,44 +112,8 @@
 				</tbody>
 			</table>
             <% } %>
+			<p id="rLink"><a href="/home">Home Page</a></p>
 		</section>
-
-		<!-- upload section -->
-		<section id="upload_section" style="align-items: center;">
-			<!-- This is a file uploader for MP3s -->
-			<div style="display: inline-block;">
-				<form action="/insert_table" method="POST" enctype="multipart/form-data" id="file_container">
-					<p>Click on the box below to upload an MP3 file to bucket!</p>
-					<p>(Note: replace spaces in file name with '_')</p>
-				<input type="hidden" data-accepted="audio/*" id="simple-file-upload" class="simple-file-upload" data-maxFileSize="5" required name="file_input" data-preview="false" data-width="500" data-height="50" >
-				<br>
-				</form>
-			</div>
-			<br>
-
-			<!-- field for adding database info  -->
-			<div display: inline;>
-			<form action="/insert_table?" method="get" style="display:inline-block;">
-				<div style="display: inline;">
-				<input type="text" name="song" id="song" widnoth="100px" required placeholder="Song title">
-				<input type="text" name="album" id="album" width="100px" required placeholder="Album Name">
-				<input type="text" name="release_year" id="release_year" width="100px" required placeholder="Release Year">
-				<input type="text" name="artist_name" id="artist_name" width="100px" required placeholder="Artist Name">
-				</div>
-				<div style="display: inline;">
-				<input type="text" name="genre" id="genre" width="100px" required placeholder="Genre">
-				<input type="text" name="uploader_name" id="uploader_name" width="100px" required placeholder="Uploader Name">
-				<input type="text" name="date_added" id="date_added" width="100px" required placeholder="Date Added">
-				<input type="text" name="mp3_text" id="mp3_text" width="100px" required placeholder="MP3 File Name -->">
-				<input type="file" id="file_input" accept="audio/*" style="display: inline;" required name="mp3_file"/>
-				<button id="submit_info" onclick="location.href='/insert_table?'" style="display:block;">Submit Info</button>
-				<input type="text" name="link" id="link" placeholder="Link">
-				</div>
-            </form>
-			</div>
-			<br>
-		</section>
-	</article>
 
 	<br>
 	<hr>
